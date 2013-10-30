@@ -1,0 +1,29 @@
+{
+  "name": "integration",
+  "repo": "segmentio/analytics.js-integration",
+  "description": "The base integration factory used to create custom analytics integrations for analytics.js.",
+  "version": "0.0.1",
+  "keywords": ["analytics.js", "integration", "analytics"],
+  "dependencies": {
+    "avetisk/defaults": "0.0.4",
+    "component/clone": "0.1.0",
+    "component/emitter": "1.1.0",
+    "ianstormtaylor/bind": "0.0.1",
+    "ianstormtaylor/callback": "0.0.1",
+    "segmentio/after": "0.0.1",
+    "yields/slug": "1.1.0",
+    "visionmedia/debug": "0.7.2"
+  },
+  "development": {
+    "ianstormtaylor/assert": "*",
+    "ianstormtaylor/sinon": "*",
+    "jkroso/equals": "*",
+    "timoxley/next-tick": "*"
+  },
+  "scripts": [
+    "lib/index.js",
+    "lib/protos.js",
+    "lib/statics.js"
+  ],
+  "main": "lib/index.js"
+}
