@@ -27,6 +27,10 @@ describe('integration', function () {
       assert(equal({}, Integration.prototype.defaults));
     });
 
+    it('should have empty #globals', function () {
+      assert(equal([], Integration.prototype.globals));
+    });
+
     it('should copy over its #name', function () {
       assert('Name' === Integration.prototype.name);
     });
@@ -96,9 +100,10 @@ describe('integration', function () {
   });
 
   describe('.global', function () {
-    it('should store a #_global', function () {
-      Integration.global('key');
-      assert('key' === Integration.prototype._global);
+    it('should register a global key', function () {
+      Integration.global('key').global('quee');
+      assert('key' === Integration.prototype.globals[0]);
+      assert('quee' === Integration.prototype.globals[1]);
     });
   });
 
@@ -284,11 +289,13 @@ describe('integration', function () {
 
   describe('#reset', function () {
     it('should remove a global', function () {
-      Integration.global('analytics');
+      Integration.global('one').global('two');
       integration = new Integration();
-      window.analytics = {};
+      window.one = [];
+      window.two = {};
       integration.reset();
-      assert(undefined === window.analytics);
+      assert(undefined === window.one);
+      assert(undefined === window.two);
     });
   });
 

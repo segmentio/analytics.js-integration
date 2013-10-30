@@ -28,7 +28,7 @@ Custom.prototype.track = function (event, properties) {
 
 ### .global(key)
   
-  Set the `Integration`'s global `key`. If this key already exists on `window` when `initialize` is called, it will return early, ensuring that setup logic and libraries aren't loaded twice.
+  Register a new global variable `key` that the Integration uses. If this key already exists on `window` when `initialize` is called, it will return early, ensuring that setup logic and libraries aren't loaded twice.
 
 ### .assumesPageview()
   
