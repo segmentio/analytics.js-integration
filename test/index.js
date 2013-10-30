@@ -257,8 +257,12 @@ describe('integration', function () {
     });
 
     it('should transform #page to #initialize when a pageview is assumed', function () {
-      integration.queue('page');
-      assert(integration.initialize.called);
+      integration.queue('page', ['Name', { property: true }, { option: true}]);
+      assert(integration.initialize.calledWith({
+        name: 'Name',
+        properties: { property: true },
+        options: { option: true }
+      }));
     });
 
     it('should push the method and args onto the queue', function () {
@@ -280,7 +284,7 @@ describe('integration', function () {
     it('should call #page after being invoked twice if initialPageview option is false', function () {
       var page = sinon.spy(Integration.prototype, 'page');
       integration = new Integration({ initialPageview: false });
-      integration.page();
+      integration.page('name');
       assert(!page.called);
       integration.page();
       assert(page.called);

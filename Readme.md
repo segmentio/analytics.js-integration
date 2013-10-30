@@ -42,9 +42,9 @@ Custom.prototype.track = function (event, properties) {
 
   Mark the `Integration` as being ready after `load` is called. This is true for integrations that need to wait for their library to load to record data.
 
-### #initialize()
+### #initialize([page])
   
-  Initialize the integration. This is where the typical 3rd-party Javascript snippet logic should be.
+  Initialize the integration. This is where the typical 3rd-party Javascript snippet logic should be. If the integration assumes an initial pageview, `initialize` will be called with the `page` method's arguments.
 
 ### #load([callback])
   
