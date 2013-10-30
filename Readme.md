@@ -24,15 +24,15 @@ Custom.prototype.track = function (event, properties) {
 
 ### integration(name)
   
-  Create a new `Integration` constructor, with the given integration `name`. `name` is the key with which users can `initialize` the integration.
+  Create a new `Integration` constructor with the given integration `name`. `name` is the key with which users can `initialize` the integration.
 
 ### .global(key)
   
-  Set the `Integration`'s global `key`. If this key already exists on `window` when initialize is called, it will return early, ensuring that setup logic and libraries aren't loaded twice.
+  Set the `Integration`'s global `key`. If this key already exists on `window` when `initialize` is called, it will return early, ensuring that setup logic and libraries aren't loaded twice.
 
 ### .assumesPageview()
   
-  Mark the `Integration` as assuming an initial pageview has happened when its Javascript library loads. This way they very first call to `page` actually initializes the integration, ensuring that the first page isn't counted twice.
+  Mark the `Integration` as assuming an initial pageview has happened when its Javascript library loads. This way the very first call to `page` actually initializes the integration, ensuring that the first page isn't counted twice.
 
 ### .readyOnInitialize()
   
@@ -40,7 +40,7 @@ Custom.prototype.track = function (event, properties) {
 
 ### .readyOnLoad()
 
-  Mark the `Integration` as being ready after `load` is called.
+  Mark the `Integration` as being ready after `load` is called. This is true for integrations that need to wait for their library to load to record data.
 
 ### #initialize()
   
@@ -48,19 +48,19 @@ Custom.prototype.track = function (event, properties) {
 
 ### #load([callback])
   
-  Load the integration's 3rd-party Javascript library, and `callback(err, e)`. The loading logic should be pulled out of the snippet from initialize and placed here.
+  Load the integration's 3rd-party Javascript library, and `callback(err, e)`. The loading logic should be pulled out of the snippet from `initialize` and placed here.
 
 ### #page([name], [properties], [options])
   
-  Label a page with optional `name` and `properties`.
+  Label a page with an optional `name` and `properties`.
 
 ### #identify([id], [traits], [options])
   
-  Identify a user by optional `id` with optional `traits`.
+  Identify a user by an optional `id` with optional `traits`.
 
 ### #group([id], [properties], [options])
 
-  Identify a group of users, like an "account" or "organization" or "team" by optional `id` with optional `properties`.
+  Identify a group of users, like an "account" or "organization" or "team" by an optional `id` with optional `properties`.
 
 ### #track(event, [properties], [options])
 
