@@ -1,5 +1,5 @@
 
-test = http://localhost:4200
+test = http://localhost:4201
 component = node_modules/component/bin/component
 phantom = node_modules/.bin/mocha-phantomjs --setting web-security=false --setting local-to-remote-url-access=true
 
@@ -13,7 +13,7 @@ components: component.json
 	@$(component) install --dev
 
 kill:
-	@test ! -s test/pid.txt || kill -9 `cat test/pid.txt`
+	@test ! -s test/pid.txt || kill `cat test/pid.txt` > /dev/null
 	@rm -f test/pid.txt
 
 node_modules: package.json

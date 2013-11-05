@@ -71,15 +71,9 @@ describe('integration', function () {
       assert(load !== integration.load);
     });
 
-    it('should not wrap #page', function () {
+    it('should wrap #page', function () {
       var page = Integration.prototype.page;
       integration = new Integration();
-      assert(page === integration.page);
-    });
-
-    it('should wrap #page if initialPageview option is false', function () {
-      var page = Integration.prototype.page;
-      integration = new Integration({ initialPageview: false });
       assert(page !== integration.page);
     });
 
@@ -111,22 +105,6 @@ describe('integration', function () {
     it('should set #_assumesPageview', function () {
       Integration.assumesPageview();
       assert(true === Integration.prototype._assumesPageview);
-    });
-
-    it('should wrap #initialize', function () {
-      var initialize = Integration.prototype.initialize;
-      Integration.assumesPageview();
-      assert(initialize !== Integration.prototype.initialize);
-    });
-
-    it('should call #initialize after being invoked twice', function () {
-      var initialize = Integration.prototype.initialize = sinon.spy();
-      Integration.assumesPageview();
-      var integration = new Integration();
-      integration.initialize();
-      assert(!initialize.called);
-      integration.initialize();
-      assert(initialize.called);
     });
   });
 
@@ -181,20 +159,42 @@ describe('integration', function () {
       integration.load = sinon.spy();
     });
 
+    it('should set _initialized', function () {
+      assert(!integration._initialized);
+      integration.initialize();
+      assert(integration._initialized);
+    });
+
+    it('should return early if the integration already exists on the page', function (done) {
+      integration.exists = function () { return true; };
+      integration.once('ready', function () {
+        assert(!integration.load.called);
+        done();
+      });
+      integration.initialize();
+    });
+
     it('should call #load by default', function () {
       integration.initialize();
       assert(integration.load.called);
     });
 
-    it('should return early if the integration already exists on the page', function () {
-      integration.exists = function () { return true; };
+    it('should emit ready if ready on initialize', function (done) {
+      integration.once('ready', function () {
+        assert(integration.load.called);
+        done();
+      });
       integration.initialize();
-      assert(!integration.load.called);
     });
 
-    it('should emit ready if ready on initialize', function (done) {
-      integration.once('ready', done);
+    it('should be a noop the first time if the integration assumes a pageview', function () {
+      var initialize = Integration.prototype.initialize = sinon.spy();
+      Integration.assumesPageview();
+      var integration = new Integration();
       integration.initialize();
+      assert(!initialize.called);
+      integration.initialize();
+      assert(initialize.called);
     });
   });
 
@@ -281,13 +281,16 @@ describe('integration', function () {
   });
 
   describe('#page', function () {
-    it('should call #page after being invoked twice if initialPageview option is false', function () {
-      var page = sinon.spy(Integration.prototype, 'page');
-      integration = new Integration({ initialPageview: false });
-      integration.page('name');
-      assert(!page.called);
-      integration.page();
-      assert(page.called);
+    it('should call initialize the first time when a page view is assumed', function () {
+      Integration.assumesPageview();
+      integration = new Integration();
+      integration.initialize = sinon.spy();
+      integration.page('name', { property: true });
+      assert(integration.initialize.calledWith({
+        name: 'name',
+        properties: { property: true },
+        options: undefined
+      }));
     });
   });
 
