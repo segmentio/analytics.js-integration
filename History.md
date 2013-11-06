@@ -1,3 +1,7 @@
+0.0.5 - November 6, 2013
+------------------------
+* add `exists` check for globals
+
 0.0.4 - November 5, 2013
 ------------------------
 * move `initialize` on `page` logic into `page`
