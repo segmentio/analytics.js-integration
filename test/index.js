@@ -148,7 +148,21 @@ describe('integration', function () {
 
   describe('#exists', function () {
     it('should return false by default', function () {
-      assert(false === integration.exists());
+      assert(!integration.exists());
+    });
+
+    it('should return true if any of the globals exist', function () {
+      Integration.global('one').global('two');
+      integration = new Integration();
+      window.one = true;
+      assert(integration.exists());
+      delete window.one;
+    });
+
+    it('should return false if none of the globals exist', function () {
+      Integration.global('one').global('two');
+      integration = new Integration();
+      assert(!integration.exists());
     });
   });
 
