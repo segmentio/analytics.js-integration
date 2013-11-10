@@ -83,6 +83,19 @@ describe('integration', function () {
       integration.emit('ready');
       assert(flush.called);
     });
+
+    it('should emit `construct` before wrapping', function () {
+      var load, initialize, instance;
+      Integration.on('construct', function (integration) {
+        instance = integration;
+        load = integration.load;
+        initialize = integration.initialize;
+      });
+      var integration = new Integration();
+      assert(instance === integration);
+      assert(load !== integration.load);
+      assert(initialize !== integration.initialize);
+    });
   });
 
   describe('.option', function () {
