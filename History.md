@@ -1,3 +1,7 @@
+0.0.6 - November 6, 2013
+------------------------
+* fix `ready` to always be emitted asynchronously
+
 0.0.5 - November 6, 2013
 ------------------------
 * add `exists` check for globals
