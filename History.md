@@ -1,3 +1,7 @@
+0.1.1 - November 11, 2013
+-------------------------
+* add `section` argument to `page` method signature
+ 
 0.1.0 - November 10, 2013
 -------------------------
 * change `exists` to `loaded` and check in `load`
