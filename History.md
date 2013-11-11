@@ -2,6 +2,10 @@
 -------------------------
 * change `exists` to `loaded` and check in `load`
 
+0.0.7 - November 10, 2013
+-------------------------
+* add `construct` event to integration
+
 0.0.6 - November 6, 2013
 ------------------------
 * fix `ready` to always be emitted asynchronously
