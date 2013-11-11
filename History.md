@@ -1,3 +1,7 @@
+0.1.2 - November 11, 2013
+-------------------------
+* rename `section` argument to `category`
+
 0.1.1 - November 11, 2013
 -------------------------
 * add `section` argument to `page` method signature

@@ -270,9 +270,9 @@ describe('integration', function () {
     });
 
     it('should transform #page to #initialize when a pageview is assumed', function () {
-      integration.queue('page', ['Section', 'Name', { property: true }, { option: true}]);
+      integration.queue('page', ['Category', 'Name', { property: true }, { option: true}]);
       assert(integration.initialize.calledWith({
-        section: 'Section',
+        category: 'Category',
         name: 'Name',
         properties: { property: true },
         options: { option: true }
@@ -299,9 +299,9 @@ describe('integration', function () {
       Integration.assumesPageview();
       integration = new Integration();
       integration.initialize = sinon.spy();
-      integration.page('section', 'name', { property: true });
+      integration.page('category', 'name', { property: true });
       assert(integration.initialize.calledWith({
-        section: 'section',
+        category: 'category',
         name: 'name',
         properties: { property: true },
         options: undefined
