@@ -1,3 +1,7 @@
+0.1.0 - November 10, 2013
+-------------------------
+* change `exists` to `loaded` and check in `load`
+
 0.0.6 - November 6, 2013
 ------------------------
 * fix `ready` to always be emitted asynchronously

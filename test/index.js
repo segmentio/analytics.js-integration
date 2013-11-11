@@ -146,23 +146,9 @@ describe('integration', function () {
     });
   });
 
-  describe('#exists', function () {
+  describe('#loaded', function () {
     it('should return false by default', function () {
-      assert(!integration.exists());
-    });
-
-    it('should return true if any of the globals exist', function () {
-      Integration.global('one').global('two');
-      integration = new Integration();
-      window.one = true;
-      assert(integration.exists());
-      delete window.one;
-    });
-
-    it('should return false if none of the globals exist', function () {
-      Integration.global('one').global('two');
-      integration = new Integration();
-      assert(!integration.exists());
+      assert(!integration.loaded());
     });
   });
 
@@ -177,15 +163,6 @@ describe('integration', function () {
       assert(!integration._initialized);
       integration.initialize();
       assert(integration._initialized);
-    });
-
-    it('should return early if the integration already exists on the page', function (done) {
-      integration.exists = function () { return true; };
-      integration.once('ready', function () {
-        assert(!integration.load.called);
-        done();
-      });
-      integration.initialize();
     });
 
     it('should call #load by default', function () {
@@ -216,6 +193,15 @@ describe('integration', function () {
     beforeEach(function () {
       Integration.readyOnLoad();
       integration = new Integration();
+    });
+
+    it('should return early if the integration is already loaded', function (done) {
+      integration.loaded = function () { return true; };
+      integration.once('ready', function () {
+        assert(!integration.load.called);
+        done();
+      });
+      integration.load();
     });
 
     it('should callback', function (done) {
