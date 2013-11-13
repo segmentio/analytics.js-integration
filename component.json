@@ -13,7 +13,7 @@
     "segmentio/after": "0.0.1",
     "timoxley/next-tick": "0.0.2",
     "yields/slug": "1.1.0",
-    "visionmedia/debug": "0.7.2"
+    "visionmedia/debug": "0.7.3"
   },
   "development": {
     "ianstormtaylor/assert": "*",
