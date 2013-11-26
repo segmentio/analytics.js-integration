@@ -217,6 +217,13 @@ describe('integration', function () {
       integration.load();
     });
 
+    it('should callback if the integration is already loaded, but not `readyOnLoad`', function (done) {
+      var NotReadyOnLoad = createIntegration('Name');
+      integration = new NotReadyOnLoad();
+      integration.loaded = function () { return true; };
+      integration.load(done);
+    });
+
     it('should callback', function (done) {
       integration.load(done);
     });

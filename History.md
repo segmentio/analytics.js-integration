@@ -1,3 +1,11 @@
+0.1.5 - November 26, 2013
+-------------------------
+* adding `readyOnLoad` fix to still call `load` callback
+
+0.1.4 - November 12, 2013
+-------------------------
+* debug: upgrade to 0.7.3
+
 0.1.2 - November 11, 2013
 -------------------------
 * rename `section` argument to `category`
@@ -5,7 +13,7 @@
 0.1.1 - November 11, 2013
 -------------------------
 * add `section` argument to `page` method signature
- 
+
 0.1.0 - November 10, 2013
 -------------------------
 * change `exists` to `loaded` and check in `load`
