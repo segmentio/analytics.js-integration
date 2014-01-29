@@ -326,7 +326,7 @@ describe('integration', function () {
   describe('#track', function(){
     var track;
 
-    beforeEach(function(done){
+    beforeEach(function(){
       Integration.readyOnInitialize();
       track = Integration.prototype.track = sinon.spy();
       integration = new Integration;
@@ -334,8 +334,6 @@ describe('integration', function () {
       integration.addedProduct = sinon.spy();
       integration.removedProduct = sinon.spy();
       integration.checkedOut = sinon.spy();
-      integration.on('ready', done);
-      integration.initialize();
     })
 
     it('should call #viewedProduct when the event is /viewed product/i', function(){
