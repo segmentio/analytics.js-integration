@@ -1,9 +1,10 @@
 
 describe('integration', function () {
 
+  var createIntegration = require('integration');
+  var test = require('integration-tester');
   var assert = require('assert');
   var equal = require('equals');
-  var createIntegration = require('integration');
   var sinon = require('sinon');
   var tick = require('next-tick');
 
@@ -76,6 +77,12 @@ describe('integration', function () {
       integration = new Integration();
       assert(page !== integration.page);
     });
+
+    it('should wrap #track', function(){
+      var track = Integration.prototype.track;
+      integration = new Integration();
+      assert(track != integration.track);
+    })
 
     it('should call #flush when ready', function () {
       var flush = sinon.spy(Integration.prototype, 'flush');
@@ -315,6 +322,68 @@ describe('integration', function () {
       }));
     });
   });
+
+  describe('#track', function(){
+    var track;
+
+    beforeEach(function(done){
+      Integration.readyOnInitialize();
+      track = Integration.prototype.track = sinon.spy();
+      integration = new Integration;
+      integration.viewedProduct = sinon.spy();
+      integration.addedProduct = sinon.spy();
+      integration.removedProduct = sinon.spy();
+      integration.checkedOut = sinon.spy();
+      integration.on('ready', done);
+      integration.initialize();
+    })
+
+    it('should call #viewedProduct when the event is /viewed product/i', function(){
+      test(integration).track('viewed product');
+      test(integration).track('Viewed Product');
+      var args = integration.viewedProduct.args;
+      assert(2 == args.length);
+      assert('viewed product' == args[0][0].event());
+      assert('Viewed Product' == args[1][0].event());
+      assert(!track.called);
+    })
+
+    it('should call #addedProduct when the event is /added product/i', function(){
+      test(integration).track('added product');
+      test(integration).track('Added Product');
+      var args = integration.addedProduct.args;
+      assert(2 == args.length);
+      assert('added product' == args[0][0].event());
+      assert('Added Product' == args[1][0].event());
+      assert(!track.called);
+    })
+
+    it('should call #addedProduct when the event is /removed product/i', function(){
+      test(integration).track('removed product');
+      test(integration).track('Removed Product');
+      var args = integration.removedProduct.args;
+      assert(2 == args.length);
+      assert('removed product' == args[0][0].event());
+      assert('Removed Product' == args[1][0].event());
+      assert(!track.called);
+    })
+
+    it('should call #checkedOut when the event is /checked out/i', function(){
+      test(integration).track('checked out');
+      test(integration).track('Checked Out');
+      var args = integration.checkedOut.args;
+      assert(2 == args.length);
+      assert('checked out' == args[0][0].event());
+      assert('Checked Out' == args[1][0].event());
+      assert(!track.called);
+    })
+
+    it('should not error if a method is not implemented and fallback to track', function(){
+      integration.checkedOut = null;
+      test(integration).track('checked out');
+      assert(track.called);
+    })
+  })
 
   describe('#reset', function () {
     it('should remove a global', function () {

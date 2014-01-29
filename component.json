@@ -19,11 +19,13 @@
     "ianstormtaylor/assert": "*",
     "ianstormtaylor/sinon": "*",
     "jkroso/equals": "*",
+    "segmentio/analytics.js-integration-tester": "*",
     "timoxley/next-tick": "*"
   },
   "scripts": [
     "lib/index.js",
     "lib/protos.js",
+    "lib/events.js",
     "lib/statics.js"
   ],
   "main": "lib/index.js"
