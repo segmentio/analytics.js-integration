@@ -2,6 +2,7 @@
 0.1.7 / 2014-01-30
 ==================
 
+ * pass all arguments to track()
  * dont wait until "ready" event to call track() directly
 
 0.1.6 / 2014-01-30
