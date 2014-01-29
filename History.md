@@ -1,3 +1,9 @@
+
+0.1.6 / 2014-01-30
+==================
+
+ * add eCommerce api
+
 0.1.5 - November 26, 2013
 -------------------------
 * adding `readyOnLoad` fix to still call `load` callback
