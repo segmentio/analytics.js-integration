@@ -376,6 +376,20 @@ describe('integration', function () {
       assert(!track.called);
     })
 
+    it('should apply arguments to methods', function(){
+      var facade = test.types.track('removed product', {});
+      integration.track(facade, 1, 2 , 3);
+      var args = integration.removedProduct.args[0];
+      assert(facade == args[0]);
+      assert(4 == args.length);
+      assert(3 == args.pop());
+      facade = test.types.track('some-event', {});
+      integration.track(facade, 1, 2, 3);
+      assert(facade == track.args[0])
+      assert(4 == track.args[0].length)
+      assert(3 == track.args[0].pop())
+    })
+
     it('should not error if a method is not implemented and fallback to track', function(){
       integration.checkedOut = null;
       test(integration).track('checked out');
