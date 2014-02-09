@@ -333,7 +333,7 @@ describe('integration', function () {
       integration.viewedProduct = sinon.spy();
       integration.addedProduct = sinon.spy();
       integration.removedProduct = sinon.spy();
-      integration.checkedOut = sinon.spy();
+      integration.completedOrder = sinon.spy();
     })
 
     it('should call #viewedProduct when the event is /viewed product/i', function(){
@@ -366,13 +366,13 @@ describe('integration', function () {
       assert(!track.called);
     })
 
-    it('should call #checkedOut when the event is /checked out/i', function(){
-      test(integration).track('checked out');
-      test(integration).track('Checked Out');
-      var args = integration.checkedOut.args;
+    it('should call #completedOrder when the event is /completed order/i', function(){
+      test(integration).track('completed order');
+      test(integration).track('Completed Order');
+      var args = integration.completedOrder.args;
       assert(2 == args.length);
-      assert('checked out' == args[0][0].event());
-      assert('Checked Out' == args[1][0].event());
+      assert('completed order' == args[0][0].event());
+      assert('Completed Order' == args[1][0].event());
       assert(!track.called);
     })
 
@@ -385,14 +385,14 @@ describe('integration', function () {
       assert(3 == args.pop());
       facade = test.types.track('some-event', {});
       integration.track(facade, 1, 2, 3);
-      assert(facade == track.args[0])
+      assert(facade == track.args[0][0])
       assert(4 == track.args[0].length)
       assert(3 == track.args[0].pop())
     })
 
     it('should not error if a method is not implemented and fallback to track', function(){
-      integration.checkedOut = null;
-      test(integration).track('checked out');
+      integration.completedOrder = null;
+      test(integration).track('completed order');
       assert(track.called);
     })
   })
