@@ -244,6 +244,11 @@ describe('integration', function () {
       integration.once('ready', done);
       integration.load();
     });
+
+    it('should return the returned value', function(){
+      Integration.prototype.load = function(){ return 1; };
+      assert(1 == new Integration().load());
+    })
   });
 
   describe('#invoke', function () {
@@ -274,6 +279,16 @@ describe('integration', function () {
       integration.initialize();
       integration.invoke('page', 'name');
     });
+
+    it('should return the returned value', function(done){
+      Integration.prototype.page = function(){ return 1; };
+      var integration = new Integration();
+      integration.on('ready', function(){      
+        assert(1 == integration.invoke('page', 'name'));
+        done();
+      });
+      integration.emit('ready');
+    })
   });
 
   describe('#queue', function () {
@@ -321,6 +336,11 @@ describe('integration', function () {
         options: undefined
       }));
     });
+
+    it('should return the value', function(){
+      Integration.prototype.page = function(){ return 1; };
+      assert(1 == new Integration().page());
+    })
   });
 
   describe('#track', function(){
@@ -394,6 +414,15 @@ describe('integration', function () {
       integration.completedOrder = null;
       test(integration).track('completed order');
       assert(track.called);
+    })
+
+    it('should return the value', function(){
+      Integration.prototype.track = function(){ return 1; };
+      Integration.prototype.completedOrder = function(){ return 1; };
+      var a = test.types.track('event');
+      var b = test.types.track('completed order');
+      assert(1 == new Integration().track(a));
+      assert(1 == new Integration().track(b));
     })
   })
 
