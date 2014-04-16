@@ -299,13 +299,8 @@ describe('integration', function () {
     });
 
     it('should transform #page to #initialize when a pageview is assumed', function () {
-      integration.queue('page', ['Category', 'Name', { property: true }, { option: true}]);
-      assert(integration.initialize.calledWith({
-        category: 'Category',
-        name: 'Name',
-        properties: { property: true },
-        options: { option: true }
-      }));
+      integration.queue('page', [{ name: 'page' }]);
+      assert(integration.initialize.calledWith({ name: 'page' }));
     });
 
     it('should push the method and args onto the queue', function () {
@@ -328,13 +323,8 @@ describe('integration', function () {
       Integration.assumesPageview();
       integration = new Integration();
       integration.initialize = sinon.spy();
-      integration.page('category', 'name', { property: true });
-      assert(integration.initialize.calledWith({
-        category: 'category',
-        name: 'name',
-        properties: { property: true },
-        options: undefined
-      }));
+      integration.page({ name: 'page name' });
+      assert(integration.initialize.calledWith({ name: 'page name' }));
     });
 
     it('should return the value', function(){
