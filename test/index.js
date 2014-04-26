@@ -333,6 +333,52 @@ describe('integration', function () {
     })
   });
 
+  describe('#events', function(){
+    describe('when options.events is an object', function(){
+      it('should return an empty array on mismatch', function(){
+        integration.options.events = { a: '4be41523', b: 'd49ccea' };
+        assert.deepEqual([], integration.events('c'));
+      })
+
+      it('should return an array with the value on match', function(){
+        integration.options.events = { a: '48dc32b2', b: '48dc32b2' };
+        assert.deepEqual(['48dc32b2'], integration.events('b'));
+      })
+
+      it('should use to-no-case to match keys', function(){
+        integration.options.events = { 'My Event': '7b4fe803', 'other event': '2107007a' };
+        assert.deepEqual(['7b4fe803'], integration.events('my_event'));
+      })
+    })
+
+    describe('when .options.events is an array', function(){
+      it('should return an empty array if the array isnt a map', function(){
+        integration.options.events = ['one', 'two'];
+        assert.deepEqual([], integration.events('one'));
+      })
+
+      it('should return an empty array when the array is empty', function(){
+        integration.options.events = [];
+        assert.deepEqual([], integration.events('wee'));
+      })
+
+      it('should return an empty array on mismatch', function(){
+        integration.options.events = [{ key: 'my event', value: '1121f10f' }];
+        assert([], integration.events('event'));
+      })
+
+      it('should return all matches in the array', function(){
+        integration.options.events = [{ key: 'baz', value: '4cff6219' }, { key: 'baz', value: '4426d54'} ];
+        assert(['4cff6219', '4426d54'], integration.events('baz'));
+      })
+
+      it('should use to-no-case to match keys', function(){
+        integration.options.events = [{ key: 'My Event', value: 'a35bd696' }];
+        assert(['a35bd696'], integration.events('my_event'));
+      })
+    })
+  })
+
   describe('#track', function(){
     var track;
 

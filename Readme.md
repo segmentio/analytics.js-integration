@@ -46,6 +46,41 @@ Custom.prototype.track = function (event, properties) {
   
   Initialize the integration. This is where the typical 3rd-party Javascript snippet logic should be. If the integration assumes an initial pageview, `initialize` will be called with the `page` method's arguments.
 
+### #events('event')
+
+  Get all events that match `event`, for example if your integration only supports a handful of events like `Signed Up` and `Completed Order` you would use this method.
+
+```js
+//
+// Example
+//
+
+var MyIntegration = Integration('MyIntegration')
+  .option('events', []);
+
+//
+// In Our UI the user has those options:
+//
+// "Register" -> "Signed Up"
+// "Purchase" -> "Completed Order"
+//
+// when initialized your integration.events will be:
+//
+// [{ key: 'Register', value: 'Signed Up' }, { key: 'Purchase', 'Completed Order' }];
+//
+
+MyIntegration.prototype.track = function(track){
+  var events = this.events(track.event());
+
+  // we use each because the user might map multiple events to
+  // a single "Signed Up" or "Completed Order"
+  each(events, function(event){
+    self.debug('track %s -> %s', track.event(), event);
+    window._myglobal.push(event, track.properties());
+  });
+};
+```
+
 ### #load([callback])
   
   Load the integration's 3rd-party Javascript library, and `callback(err, e)`. The loading logic should be pulled out of the snippet from `initialize` and placed here.
