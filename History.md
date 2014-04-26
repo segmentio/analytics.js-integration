@@ -1,4 +1,10 @@
 
+0.2.0 / 2014-04-26 
+==================
+
+ * add #events method to find events.
+ * component: add githubusercontent to remotes
+
 0.1.9 / 2014-04-16 
 ==================
 
