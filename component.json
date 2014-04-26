@@ -10,13 +10,15 @@
     "component/emitter": "1.1.0",
     "ianstormtaylor/bind": "0.0.1",
     "ianstormtaylor/callback": "0.0.1",
+    "ianstormtaylor/to-no-case": "0.1.2",
+    "component/type": "1.0.0",
     "segmentio/after": "0.0.1",
     "timoxley/next-tick": "0.0.2",
     "yields/slug": "1.1.0",
     "visionmedia/debug": "0.7.3"
   },
   "development": {
-    "ianstormtaylor/assert": "*",
+    "component/assert": "*",
     "ianstormtaylor/sinon": "*",
     "jkroso/equals": "*",
     "segmentio/analytics.js-integration-tester": "*",
