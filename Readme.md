@@ -42,6 +42,10 @@ Custom.prototype.track = function (event, properties) {
 
   Mark the `Integration` as being ready after `load` is called. This is true for integrations that need to wait for their library to load to record data.
 
+### .mapping(name)
+
+  Create mapping method with `name`, this will default an option to `[]`, to learn more about mappings see `#events` method as an example.
+
 ### #initialize([page])
   
   Initialize the integration. This is where the typical 3rd-party Javascript snippet logic should be. If the integration assumes an initial pageview, `initialize` will be called with the `page` method's arguments.
@@ -56,7 +60,7 @@ Custom.prototype.track = function (event, properties) {
 //
 
 var MyIntegration = Integration('MyIntegration')
-  .option('events', []);
+  .mapping('events');
 
 //
 // In Our UI the user has those options:
