@@ -155,6 +155,10 @@ describe('integration', function () {
       var integration = new Integration;
       assert.deepEqual([], integration.options.events);
     })
+
+    it('should return `Integration`', function(){
+      assert(Integration == Integration.mapping('events'));
+    })
   })
 
   describe('#emit', function () {
