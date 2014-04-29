@@ -7,7 +7,10 @@ build: node_modules components $(shell find lib)
 	@$(component) build --dev
 
 clean:
-	@rm -rf build components node_modules
+	@rm -rf build components
+
+distclean:
+	@rm -rf node_modules
 
 components: component.json
 	@$(component) install --dev
