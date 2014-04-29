@@ -2,6 +2,8 @@
 0.2.1 / 2014-04-29 
 ==================
 
+ * .mapping(): make sure it returns the integration for chaining
+ * make: move rm node_modules to distclean target, for speed
  * add .mapping(name)
 
 0.2.0 / 2014-04-26 
