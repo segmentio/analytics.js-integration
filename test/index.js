@@ -411,43 +411,59 @@ describe('integration', function () {
       integration.completedOrder = sinon.spy();
     })
 
-    it('should call #viewedProduct when the event is /viewed product/i', function(){
+    it('should call #viewedProduct when the event is /viewed[ _]?product/i', function(){
       test(integration).track('viewed product');
       test(integration).track('Viewed Product');
+      test(integration).track('viewedProduct');
+      test(integration).track('viewed_product');
       var args = integration.viewedProduct.args;
-      assert(2 == args.length);
+      assert(4 == args.length);
       assert('viewed product' == args[0][0].event());
       assert('Viewed Product' == args[1][0].event());
+      assert('viewedProduct' == args[2][0].event());
+      assert('viewed_product' == args[3][0].event());
       assert(!track.called);
     })
 
-    it('should call #addedProduct when the event is /added product/i', function(){
+    it('should call #addedProduct when the event is /added[ _]?product/i', function(){
       test(integration).track('added product');
       test(integration).track('Added Product');
+      test(integration).track('addedProduct');
+      test(integration).track('added_product');
       var args = integration.addedProduct.args;
-      assert(2 == args.length);
+      assert(4 == args.length);
       assert('added product' == args[0][0].event());
       assert('Added Product' == args[1][0].event());
+      assert('addedProduct' == args[2][0].event());
+      assert('added_product' == args[3][0].event());
       assert(!track.called);
     })
 
-    it('should call #addedProduct when the event is /removed product/i', function(){
+    it('should call #removedProduct when the event is /removed[ _]?product/i', function(){
       test(integration).track('removed product');
       test(integration).track('Removed Product');
+      test(integration).track('removedProduct');
+      test(integration).track('removed_product');
       var args = integration.removedProduct.args;
-      assert(2 == args.length);
+      assert(4 == args.length);
       assert('removed product' == args[0][0].event());
       assert('Removed Product' == args[1][0].event());
+      assert('removedProduct' == args[2][0].event());
+      assert('removed_product' == args[3][0].event());
       assert(!track.called);
     })
 
-    it('should call #completedOrder when the event is /completed order/i', function(){
+    it('should call #completedOrder when the event is /completed[ _]?order/i', function(){
       test(integration).track('completed order');
       test(integration).track('Completed Order');
+      test(integration).track('completedOrder');
+      test(integration).track('completed_order');
       var args = integration.completedOrder.args;
-      assert(2 == args.length);
+      assert(4 == args.length);
       assert('completed order' == args[0][0].event());
       assert('Completed Order' == args[1][0].event());
+      assert('completedOrder' == args[2][0].event());
+      assert('completed_order' == args[3][0].event());
       assert(!track.called);
     })
 
