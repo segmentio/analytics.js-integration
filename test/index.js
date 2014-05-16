@@ -414,40 +414,48 @@ describe('integration', function () {
     it('should call #viewedProduct when the event is /viewed product/i', function(){
       test(integration).track('viewed product');
       test(integration).track('Viewed Product');
+      test(integration).track('viewedProduct');
       var args = integration.viewedProduct.args;
-      assert(2 == args.length);
+      assert(3 == args.length);
       assert('viewed product' == args[0][0].event());
       assert('Viewed Product' == args[1][0].event());
+      assert('viewedProduct' == args[2][0].event());
       assert(!track.called);
     })
 
     it('should call #addedProduct when the event is /added product/i', function(){
       test(integration).track('added product');
       test(integration).track('Added Product');
+      test(integration).track('addedProduct');
       var args = integration.addedProduct.args;
-      assert(2 == args.length);
+      assert(3 == args.length);
       assert('added product' == args[0][0].event());
       assert('Added Product' == args[1][0].event());
+      assert('addedProduct' == args[2][0].event());
       assert(!track.called);
     })
 
-    it('should call #addedProduct when the event is /removed product/i', function(){
+    it('should call #removedProduct when the event is /removed product/i', function(){
       test(integration).track('removed product');
       test(integration).track('Removed Product');
+      test(integration).track('removedProduct');
       var args = integration.removedProduct.args;
-      assert(2 == args.length);
+      assert(3 == args.length);
       assert('removed product' == args[0][0].event());
       assert('Removed Product' == args[1][0].event());
+      assert('removedProduct' == args[2][0].event());
       assert(!track.called);
     })
 
     it('should call #completedOrder when the event is /completed order/i', function(){
       test(integration).track('completed order');
       test(integration).track('Completed Order');
+      test(integration).track('completedOrder');
       var args = integration.completedOrder.args;
-      assert(2 == args.length);
+      assert(3 == args.length);
       assert('completed order' == args[0][0].event());
       assert('Completed Order' == args[1][0].event());
+      assert('completedOrder' == args[2][0].event());
       assert(!track.called);
     })
 
