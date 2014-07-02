@@ -1,4 +1,11 @@
 
+0.2.3 / 2014-07-02
+==================
+
+ * reset window defaults
+ * update readme
+ * version component
+
 0.2.2 / 2014-05-16 
 ==================
 
