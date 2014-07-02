@@ -507,6 +507,22 @@ describe('integration', function () {
       assert(undefined === window.one);
       assert(undefined === window.two);
     });
+
+    it('should reset window defaults', function () {
+      var setTimeout = window.setTimeout;
+      var setInterval = window.setInterval;
+      integration = new Integration();
+      var noop = function(){};
+      window.setTimeout = noop;
+      window.setInterval = noop;
+      window.onerror = noop;
+      window.onload = noop;
+      integration.reset();
+      assert(setTimeout == window.setTimeout);
+      assert(setInterval == window.setInterval);
+      assert(null == window.onerror);
+      assert(null == window.onload);
+    });
   });
 
 });
