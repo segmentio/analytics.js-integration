@@ -15,12 +15,15 @@
     "segmentio/after": "0.0.1",
     "timoxley/next-tick": "0.0.2",
     "yields/slug": "1.1.0",
-    "visionmedia/debug": "0.7.3"
+    "visionmedia/debug": "0.7.3",
+    "segmentio/facade": "*"
   },
   "development": {
     "component/assert": "*",
     "ianstormtaylor/sinon": "*",
     "jkroso/equals": "*",
+    "segmentio/spy": "*",
+    "segmentio/stub": "*",
     "segmentio/analytics.js-integration-tester": "*",
     "timoxley/next-tick": "*"
   },

@@ -1,78 +1,80 @@
 
-describe('integration', function () {
+var createIntegration = require('../lib');
+var assert = require('assert');
+var equal = require('equals');
+var spy = require('spy');
+var stub = require('stub');
+var tick = require('next-tick');
+var Facade = require('facade');
+var Page = Facade.Page;
+var Track = Facade.Track;
 
-  var createIntegration = require('integration');
-  var test = require('integration-tester');
-  var assert = require('assert');
-  var equal = require('equals');
-  var sinon = require('sinon');
-  var tick = require('next-tick');
-
+describe('integration', function(){
   var Integration, integration;
 
-  beforeEach(function () {
+  beforeEach(function(){
     Integration = createIntegration('Name');
     integration = new Integration();
   });
 
-  describe('factory', function () {
-    it('should expose a factory', function () {
+  describe('factory', function(){
+    it('should expose a factory', function(){
       assert('function' === typeof createIntegration);
     });
 
-    it('should return an integration constructor', function () {
+    it('should return an integration constructor', function(){
       assert('function' === typeof createIntegration('Name'));
     });
 
-    it('should have empty #defaults', function () {
+    it('should have empty #defaults', function(){
       assert(equal({}, Integration.prototype.defaults));
     });
 
-    it('should have empty #globals', function () {
+    it('should have empty #globals', function(){
       assert(equal([], Integration.prototype.globals));
     });
 
-    it('should copy over its #name', function () {
+    it('should copy over its #name', function(){
       assert('Name' === Integration.prototype.name);
     });
 
-    it('should copy static methods', function () {
+    it('should copy static methods', function(){
       assert('function' === typeof Integration.option);
     });
 
-    it('should copy prototype methods', function () {
+    it('should copy prototype methods', function(){
       assert('function' === typeof Integration.prototype.initialize);
     });
   });
 
-  describe('Integration', function () {
-    it('should create a debug method', function () {
+  describe('Integration', function(){
+    it('should create a debug method', function(){
       assert('function' === typeof integration.debug);
     });
 
-    it('should set #options with defaults', function () {
+    it('should set #options with defaults', function(){
       Integration.option('one', false);
       integration = new Integration({ two: true });
       assert(equal(integration.options, { one: false, two: true }));
     });
 
-    it('should create a _queue', function () {
+    it('should create a _queue', function(){
       assert(integration._queue instanceof Array);
     });
 
-    it('should wrap #initialize', function () {
+    it('should wrap #initialize', function(){
       var initialize = Integration.prototype.initialize;
       integration = new Integration();
       assert(initialize !== integration.initialize);
     });
 
-    it('should wrap #load', function () {
+    it('should wrap #load', function(){
       var load = Integration.prototype.load;
       integration = new Integration();
       assert(load !== integration.load);
     });
 
-    it('should wrap #page', function () {
+    it('should wrap #page', function(){
       var page = Integration.prototype.page;
       integration = new Integration();
       assert(page !== integration.page);
@@ -84,14 +86,14 @@ describe('integration', function () {
       assert(track != integration.track);
     })
 
-    it('should call #flush when ready', function () {
-      var flush = sinon.spy(Integration.prototype, 'flush');
+    it('should call #flush when ready', function(){
+      var flush = stub(Integration.prototype, 'flush');
       integration = new Integration();
       integration.emit('ready');
       assert(flush.called);
     });
 
-    it('should emit `construct` before wrapping', function () {
+    it('should emit `construct` before wrapping', function(){
       var load, initialize, instance;
       Integration.on('construct', function (integration) {
         instance = integration;
@@ -105,38 +107,38 @@ describe('integration', function () {
     });
   });
 
-  describe('.option', function () {
-    it('should add to #defaults', function () {
+  describe('.option', function(){
+    it('should add to #defaults', function(){
       assert(equal({}, Integration.prototype.defaults));
       Integration = createIntegration('Name').option('key', 'value');
       assert(equal({ key: 'value' }, Integration.prototype.defaults));
     });
   });
 
-  describe('.global', function () {
-    it('should register a global key', function () {
+  describe('.global', function(){
+    it('should register a global key', function(){
       Integration.global('key').global('quee');
       assert('key' === Integration.prototype.globals[0]);
       assert('quee' === Integration.prototype.globals[1]);
     });
   });
 
-  describe('.assumesPageview', function () {
-    it('should set #_assumesPageview', function () {
+  describe('.assumesPageview', function(){
+    it('should set #_assumesPageview', function(){
       Integration.assumesPageview();
       assert(true === Integration.prototype._assumesPageview);
     });
   });
 
-  describe('.readyOnLoad', function () {
-    it('should set #_readyOnLoad', function () {
+  describe('.readyOnLoad', function(){
+    it('should set #_readyOnLoad', function(){
       Integration.readyOnLoad();
       assert(true === Integration.prototype._readyOnLoad);
     });
   });
 
-  describe('.readyOnInitialize', function () {
-    it('should set #_readyOnInitialize', function () {
+  describe('.readyOnInitialize', function(){
+    it('should set #_readyOnInitialize', function(){
       Integration.readyOnInitialize();
       assert(true === Integration.prototype._readyOnInitialize);
     });
@@ -161,64 +163,64 @@ describe('integration', function () {
     })
   })
 
-  describe('#emit', function () {
-    it('should be mixed in', function () {
+  describe('#emit', function(){
+    it('should be mixed in', function(){
       assert(Integration.prototype.emit);
     });
   });
 
-  describe('#on', function () {
-    it('should be mixed in', function () {
+  describe('#on', function(){
+    it('should be mixed in', function(){
       assert(Integration.prototype.on);
     });
   });
 
-  describe('#once', function () {
-    it('should be mixed in', function () {
+  describe('#once', function(){
+    it('should be mixed in', function(){
       assert(Integration.prototype.once);
     });
   });
 
-  describe('#off', function () {
-    it('should be mixed in', function () {
+  describe('#off', function(){
+    it('should be mixed in', function(){
       assert(Integration.prototype.off);
     });
   });
 
-  describe('#loaded', function () {
-    it('should return false by default', function () {
+  describe('#loaded', function(){
+    it('should return false by default', function(){
       assert(!integration.loaded());
     });
   });
 
-  describe('#initialize', function () {
-    beforeEach(function () {
+  describe('#initialize', function(){
+    beforeEach(function(){
       Integration.readyOnInitialize();
       integration = new Integration();
-      integration.load = sinon.spy();
+      integration.load = spy();
     });
 
-    it('should set _initialized', function () {
+    it('should set _initialized', function(){
       assert(!integration._initialized);
       integration.initialize();
       assert(integration._initialized);
     });
 
-    it('should call #load by default', function () {
+    it('should call #load by default', function(){
       integration.initialize();
       assert(integration.load.called);
     });
 
     it('should emit ready if ready on initialize', function (done) {
-      integration.once('ready', function () {
+      integration.once('ready', function(){
         assert(integration.load.called);
         done();
       });
       integration.initialize();
     });
 
-    it('should be a noop the first time if the integration assumes a pageview', function () {
-      var initialize = Integration.prototype.initialize = sinon.spy();
+    it('should be a noop the first time if the integration assumes a pageview', function(){
+      var initialize = Integration.prototype.initialize = spy();
       Integration.assumesPageview();
       var integration = new Integration();
       integration.initialize();
@@ -228,15 +230,15 @@ describe('integration', function () {
     });
   });
 
-  describe('#load', function () {
-    beforeEach(function () {
+  describe('#load', function(){
+    beforeEach(function(){
       Integration.readyOnLoad();
       integration = new Integration();
     });
 
     it('should return early if the integration is already loaded', function (done) {
-      integration.loaded = function () { return true; };
-      integration.once('ready', function () {
+      integration.loaded = function(){ return true; };
+      integration.once('ready', function(){
         assert(!integration.load.called);
         done();
       });
@@ -246,7 +248,7 @@ describe('integration', function () {
     it('should callback if the integration is already loaded, but not `readyOnLoad`', function (done) {
       var NotReadyOnLoad = createIntegration('Name');
       integration = new NotReadyOnLoad();
-      integration.loaded = function () { return true; };
+      integration.loaded = function(){ return true; };
       integration.load(done);
     });
 
@@ -270,31 +272,31 @@ describe('integration', function () {
     })
   });
 
-  describe('#invoke', function () {
-    beforeEach(function () {
-      integration.track = sinon.spy();
-      integration.queue = sinon.spy();
-      integration.page = function () { throw new Error(); };
+  describe('#invoke', function(){
+    beforeEach(function(){
+      integration.track = spy();
+      integration.queue = spy();
+      integration.page = function(){ throw new Error(); };
     });
 
-    it('should do nothing if the method does not exist', function () {
+    it('should do nothing if the method does not exist', function(){
       integration.invoke('identify', 'id');
       assert(!integration.queue.called);
       assert(!integration.track.called);
     });
 
-    it('should call #queue if the integration is not ready', function () {
+    it('should call #queue if the integration is not ready', function(){
       integration.invoke('track', 'event');
       assert(integration.queue.calledWith('track', ['event']));
     });
 
-    it('should call the method if the integration is ready', function () {
+    it('should call the method if the integration is ready', function(){
       integration.emit('ready');
       integration.invoke('track', 'event');
       assert(integration.track.calledWith('event'));
     });
 
-    it('should catch errors when it calls', function () {
+    it('should catch errors when it calls', function(){
       integration.initialize();
       integration.invoke('page', 'name');
     });
@@ -310,38 +312,38 @@ describe('integration', function () {
     })
   });
 
-  describe('#queue', function () {
-    beforeEach(function () {
+  describe('#queue', function(){
+    beforeEach(function(){
       Integration.assumesPageview();
       integration = new Integration();
-      integration.initialize = sinon.spy();
+      integration.initialize = spy();
     });
 
-    it('should transform #page to #initialize when a pageview is assumed', function () {
+    it('should transform #page to #initialize when a pageview is assumed', function(){
       integration.queue('page', [{ name: 'page' }]);
       assert(integration.initialize.calledWith({ name: 'page' }));
     });
 
-    it('should push the method and args onto the queue', function () {
+    it('should push the method and args onto the queue', function(){
       integration.queue('track', ['event']);
       assert(equal(integration._queue, [{ method: 'track', args: ['event'] }]));
     });
   });
 
-  describe('#flush', function () {
-    it('should flush the queue', function () {
-      var track = integration.track = sinon.spy();
+  describe('#flush', function(){
+    it('should flush the queue', function(){
+      var track = integration.track = spy();
       integration._queue = [{ method: 'track', args: ['event'] }];
       integration.flush();
       assert(track.calledWith('event'));
     });
   });
 
-  describe('#page', function () {
-    it('should call initialize the first time when a page view is assumed', function () {
+  describe('#page', function(){
+    it('should call initialize the first time when a page view is assumed', function(){
       Integration.assumesPageview();
       integration = new Integration();
-      integration.initialize = sinon.spy();
+      integration.initialize = spy();
       integration.page({ name: 'page name' });
       assert(integration.initialize.calledWith({ name: 'page name' }));
     });
@@ -403,19 +405,19 @@ describe('integration', function () {
 
     beforeEach(function(){
       Integration.readyOnInitialize();
-      track = Integration.prototype.track = sinon.spy();
+      track = Integration.prototype.track = spy();
       integration = new Integration;
-      integration.viewedProduct = sinon.spy();
-      integration.addedProduct = sinon.spy();
-      integration.removedProduct = sinon.spy();
-      integration.completedOrder = sinon.spy();
+      integration.viewedProduct = spy();
+      integration.addedProduct = spy();
+      integration.removedProduct = spy();
+      integration.completedOrder = spy();
     })
 
     it('should call #viewedProduct when the event is /viewed[ _]?product/i', function(){
-      test(integration).track('viewed product');
-      test(integration).track('Viewed Product');
-      test(integration).track('viewedProduct');
-      test(integration).track('viewed_product');
+      integration.track(new Track({ event: 'viewed product' }));
+      integration.track(new Track({ event: 'Viewed Product' }));
+      integration.track(new Track({ event: 'viewedProduct' }));
+      integration.track(new Track({ event: 'viewed_product' }));
       var args = integration.viewedProduct.args;
       assert(4 == args.length);
       assert('viewed product' == args[0][0].event());
@@ -426,10 +428,10 @@ describe('integration', function () {
     })
 
     it('should call #addedProduct when the event is /added[ _]?product/i', function(){
-      test(integration).track('added product');
-      test(integration).track('Added Product');
-      test(integration).track('addedProduct');
-      test(integration).track('added_product');
+      integration.track(new Track({ event: 'added product' }));
+      integration.track(new Track({ event: 'Added Product' }));
+      integration.track(new Track({ event: 'addedProduct' }));
+      integration.track(new Track({ event: 'added_product' }));
       var args = integration.addedProduct.args;
       assert(4 == args.length);
       assert('added product' == args[0][0].event());
@@ -440,10 +442,10 @@ describe('integration', function () {
     })
 
     it('should call #removedProduct when the event is /removed[ _]?product/i', function(){
-      test(integration).track('removed product');
-      test(integration).track('Removed Product');
-      test(integration).track('removedProduct');
-      test(integration).track('removed_product');
+      integration.track(new Track({ event: 'removed product' }));
+      integration.track(new Track({ event: 'Removed Product' }));
+      integration.track(new Track({ event: 'removedProduct' }));
+      integration.track(new Track({ event: 'removed_product' }));
       var args = integration.removedProduct.args;
       assert(4 == args.length);
       assert('removed product' == args[0][0].event());
@@ -454,10 +456,10 @@ describe('integration', function () {
     })
 
     it('should call #completedOrder when the event is /completed[ _]?order/i', function(){
-      test(integration).track('completed order');
-      test(integration).track('Completed Order');
-      test(integration).track('completedOrder');
-      test(integration).track('completed_order');
+      integration.track(new Track({ event: 'completed order' }));
+      integration.track(new Track({ event: 'Completed Order' }));
+      integration.track(new Track({ event: 'completedOrder' }));
+      integration.track(new Track({ event: 'completed_order' }));
       var args = integration.completedOrder.args;
       assert(4 == args.length);
       assert('completed order' == args[0][0].event());
@@ -468,13 +470,13 @@ describe('integration', function () {
     })
 
     it('should apply arguments to methods', function(){
-      var facade = test.types.track('removed product', {});
+      var facade = new Track({ event: 'removed product' });
       integration.track(facade, 1, 2 , 3);
       var args = integration.removedProduct.args[0];
       assert(facade == args[0]);
       assert(4 == args.length);
       assert(3 == args.pop());
-      facade = test.types.track('some-event', {});
+      facade = new Track({ event: 'some-event' });
       integration.track(facade, 1, 2, 3);
       assert(facade == track.args[0][0])
       assert(4 == track.args[0].length)
@@ -483,22 +485,22 @@ describe('integration', function () {
 
     it('should not error if a method is not implemented and fallback to track', function(){
       integration.completedOrder = null;
-      test(integration).track('completed order');
+      integration.track(new Track({ event: 'completed order' }));
       assert(track.called);
     })
 
     it('should return the value', function(){
       Integration.prototype.track = function(){ return 1; };
       Integration.prototype.completedOrder = function(){ return 1; };
-      var a = test.types.track('event');
-      var b = test.types.track('completed order');
+      var a = new Track({ event: 'event' });
+      var b = new Track({ event: 'completed order' });
       assert(1 == new Integration().track(a));
       assert(1 == new Integration().track(b));
     })
   })
 
-  describe('#reset', function () {
-    it('should remove a global', function () {
+  describe('#reset', function(){
+    it('should remove a global', function(){
       Integration.global('one').global('two');
       integration = new Integration();
       window.one = [];
@@ -508,7 +510,7 @@ describe('integration', function () {
       assert(undefined === window.two);
     });
 
-    it('should reset window defaults', function () {
+    it('should reset window defaults', function(){
       var setTimeout = window.setTimeout;
       var setInterval = window.setInterval;
       integration = new Integration();
