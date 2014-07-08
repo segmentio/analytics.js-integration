@@ -2,7 +2,7 @@
   "name": "integration",
   "private": true,
   "devDependencies": {
-    "component": "~0.18.0",
+    "duo": "0.x",
     "express": "~3.1.0",
     "hbs": "~2.3.0",
     "mocha-phantomjs": "~3.1.5",
