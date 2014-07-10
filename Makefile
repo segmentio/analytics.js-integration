@@ -54,7 +54,7 @@ server: kill node_modules
 # Targets.
 #
 
-build/build.js: node_modules component.json $(wildcard lib/*/*.js test/*.js)
+build/build.js: node_modules component.json $(wildcard lib/*.js test/*.js)
 	@$(duo) --development test/index.js build/build.js
 
 node_modules: package.json

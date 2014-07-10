@@ -68,12 +68,6 @@ describe('integration', function(){
       assert(initialize !== integration.initialize);
     });
 
-    it('should wrap #load', function(){
-      var load = Integration.prototype.load;
-      integration = new Integration();
-      assert(load !== integration.load);
-    });
-
     it('should wrap #page', function(){
       var page = Integration.prototype.page;
       integration = new Integration();
@@ -97,12 +91,10 @@ describe('integration', function(){
       var load, initialize, instance;
       Integration.on('construct', function (integration) {
         instance = integration;
-        load = integration.load;
         initialize = integration.initialize;
       });
       var integration = new Integration();
       assert(instance === integration);
-      assert(load !== integration.load);
       assert(initialize !== integration.initialize);
     });
   });
@@ -206,19 +198,6 @@ describe('integration', function(){
       assert(integration._initialized);
     });
 
-    it('should call #load by default', function(){
-      integration.initialize();
-      assert(integration.load.called);
-    });
-
-    it('should emit ready if ready on initialize', function (done) {
-      integration.once('ready', function(){
-        assert(integration.load.called);
-        done();
-      });
-      integration.initialize();
-    });
-
     it('should be a noop the first time if the integration assumes a pageview', function(){
       var initialize = Integration.prototype.initialize = spy();
       Integration.assumesPageview();
@@ -232,44 +211,27 @@ describe('integration', function(){
 
   describe('#load', function(){
     beforeEach(function(){
-      Integration.readyOnLoad();
+      Integration.tag('example-img', '<img src="/{{name}}.png">')
+      Integration.tag('example-script', '<script src="http://ajax.googleapis.com/ajax/libs/jquery/{{version}}/jquery.min.js"></script>');
       integration = new Integration();
+      spy(integration, 'load');
     });
 
-    it('should return early if the integration is already loaded', function (done) {
-      integration.loaded = function(){ return true; };
-      integration.once('ready', function(){
-        assert(!integration.load.called);
+    it('should load img', function (done) {
+      integration.load('example-img', { name: 'example' }, function(){
+        var img = integration.load.returns[0];
+        assert.equal(window.location.origin + '/example.png', img.src);
         done();
       });
-      integration.load();
     });
 
-    it('should callback if the integration is already loaded, but not `readyOnLoad`', function (done) {
-      var NotReadyOnLoad = createIntegration('Name');
-      integration = new NotReadyOnLoad();
-      integration.loaded = function(){ return true; };
-      integration.load(done);
+    it('should load script', function (done) {
+      integration.load('example-script', { version: '1.11.1' }, function(){
+        var script = integration.load.returns[0];
+        assert.equal('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', script.src);
+        done();
+      });
     });
-
-    it('should callback', function (done) {
-      integration.load(done);
-    });
-
-    it('should emit load', function (done) {
-      integration.once('load', done);
-      integration.load();
-    });
-
-    it('should emit ready if ready on load', function (done) {
-      integration.once('ready', done);
-      integration.load();
-    });
-
-    it('should return the returned value', function(){
-      Integration.prototype.load = function(){ return 1; };
-      assert(1 == new Integration().load());
-    })
   });
 
   describe('#invoke', function(){

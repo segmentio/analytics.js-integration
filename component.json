@@ -6,6 +6,7 @@
   "keywords": ["analytics.js", "integration", "analytics"],
   "dependencies": {
     "avetisk/defaults": "0.0.4",
+    "component/assert": "*",
     "component/clone": "0.1.0",
     "component/emitter": "1.1.0",
     "ianstormtaylor/bind": "0.0.1",
@@ -19,7 +20,6 @@
     "segmentio/facade": "*"
   },
   "development": {
-    "component/assert": "*",
     "ianstormtaylor/sinon": "*",
     "jkroso/equals": "*",
     "segmentio/spy": "*",
