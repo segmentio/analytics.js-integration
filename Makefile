@@ -23,32 +23,20 @@ phantomjs = node_modules/.bin/mocha-phantomjs \
 
 default: build/build.js
 
-test: node_modules build/build.js server
+test: node_modules build/build.js
 	@$(phantomjs) http://localhost:$(port)
 
-test-browser: build/build.js server
+test-browser: build/build.js
 	@open http://localhost:$(port)
 
-test-coverage: build/build.js server
+test-coverage: build/build.js
 	@open http://localhost:$(port)/coverage
 
-test-sauce: node_modules build/build.js server
+test-sauce: node_modules build/build.js
 	@node bin/gravy --url http://localhost:$(port)
 
 clean:
 	@rm -rf build components
-
-kill:
-	@if [ -a test/pid.txt ]; \
-		then if ps -p `cat test/pid.txt` > /dev/null; \
-			then kill `cat test/pid.txt` &> /dev/null; \
-		fi; \
-		rm -f test/pid.txt; \
-	fi;
-
-server: kill node_modules
-	@port=$(port) node test/server.js &> /dev/null &
-	@sleep 1
 
 #
 # Targets.
@@ -65,8 +53,6 @@ node_modules: package.json
 #
 
 .PHONY: clean
-.PHONY: kill
-.PHONY: server
 .PHONY: test
 .PHONY: test-browser
 .PHONY: test-coverage

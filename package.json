@@ -3,11 +3,7 @@
   "private": true,
   "devDependencies": {
     "duo": "0.x",
-    "express": "~3.1.0",
-    "hbs": "~2.3.0",
     "mocha-phantomjs": "~3.1.5",
-    "uglify-js": "~2.4.1",
-    "underscore": "~1.4.3",
     "phantomjs": "~1.9.2-2"
   },
   "scripts": {
