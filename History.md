@@ -1,4 +1,16 @@
 
+0.3.0 / 2014-07-11
+==================
+
+ * ready on initialize by default
+ * duo creds
+ * use duo-test
+ * make: remove server
+ * bump node version to 0.11
+ * make new `load` method load tags (script/img/iframe). so, you don't need to implement `.load` when building a new integration.
+ * add `.tag` to the DSL, where you define script/img/iframe tags, instead of loading them manually. they use mustache-like templates, getting the options and whatever other "locals" you send to the `.load` method
+ * remove old `load` method
+
 0.2.4 / 2014-07-08
 ==================
 
