@@ -266,6 +266,14 @@ describe('integration', function(){
       integration.load();
     });
 
+    it('should set ._ready to true', function(done){
+      integration.load();
+      integration.once('ready', function(){
+        assert.equal(true, integration._ready);
+        done();
+      });
+    });
+
     it('should return the returned value', function(){
       Integration.prototype.load = function(){ return 1; };
       assert(1 == new Integration().load());
@@ -304,7 +312,7 @@ describe('integration', function(){
     it('should return the returned value', function(done){
       Integration.prototype.page = function(){ return 1; };
       var integration = new Integration();
-      integration.on('ready', function(){      
+      integration.on('ready', function(){
         assert(1 == integration.invoke('page', 'name'));
         done();
       });
