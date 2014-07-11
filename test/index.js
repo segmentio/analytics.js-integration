@@ -266,7 +266,7 @@ describe('integration', function(){
     it('should return the returned value', function(done){
       Integration.prototype.page = function(){ return 1; };
       var integration = new Integration();
-      integration.on('ready', function(){      
+      integration.on('ready', function(){
         assert(1 == integration.invoke('page', 'name'));
         done();
       });
