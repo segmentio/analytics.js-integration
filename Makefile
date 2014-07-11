@@ -5,17 +5,13 @@
 
 integration ?= *
 browser ?= ie10
-port ?= 4201
 
 #
 # Binaries.
 #
 
 duo = node_modules/.bin/duo
-phantomjs = node_modules/.bin/mocha-phantomjs \
-	--setting local-to-remote-url-access=true \
-	--setting web-security=false \
-	--path node_modules/.bin/phantomjs
+duo-test = node_modules/.bin/duo-test
 
 #
 # Commands.
@@ -24,16 +20,13 @@ phantomjs = node_modules/.bin/mocha-phantomjs \
 default: build/build.js
 
 test: node_modules build/build.js
-	@$(phantomjs) http://localhost:$(port)
+	@$(duo-test) phantomjs
 
 test-browser: build/build.js
-	@open http://localhost:$(port)
-
-test-coverage: build/build.js
-	@open http://localhost:$(port)/coverage
+	@$(duo-test) browser
 
 test-sauce: node_modules build/build.js
-	@node bin/gravy --url http://localhost:$(port)
+	@$(duo-test) saucelabs -b $(browser)
 
 clean:
 	@rm -rf build components
@@ -55,5 +48,4 @@ node_modules: package.json
 .PHONY: clean
 .PHONY: test
 .PHONY: test-browser
-.PHONY: test-coverage
 .PHONY: test-sauce

@@ -2,16 +2,19 @@
 <html>
 <head>
   <title>integration test</title>
-  <link rel="stylesheet" href="test/mocha.css">
+  <link rel="stylesheet" href="/test/mocha.css">
 </head>
 <body>
   <div id="mocha"></div>
-  <script src="test/mocha.js"></script>
+  <script src="/saucelabs.js"></script>
+  <script src="/test/mocha.js"></script>
   <script>mocha.setup({ ui: 'bdd' })</script>
-  <script src="build/build.js"></script>
+  <script src="/build/build.js"></script>
   <script>
     if (window.mochaPhantomJS) {
       mochaPhantomJS.run()
+    } else if (window.saucelabs) {
+      saucelabs(mocha.run());
     } else {
       mocha.run();
     }
