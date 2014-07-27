@@ -5,6 +5,7 @@
   "version": "0.3.1",
   "keywords": ["analytics.js", "integration", "analytics"],
   "dependencies": {
+    "segmentio/analytics-events": "1.0.0",
     "avetisk/defaults": "0.0.4",
     "component/assert": "*",
     "component/clone": "0.1.0",
@@ -30,7 +31,6 @@
   "scripts": [
     "lib/index.js",
     "lib/protos.js",
-    "lib/events.js",
     "lib/statics.js"
   ],
   "remotes": [
