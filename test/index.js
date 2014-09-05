@@ -370,9 +370,24 @@ describe('integration', function(){
       track = Integration.prototype.track = spy();
       integration = new Integration;
       integration.viewedProduct = spy();
+      integration.viewedProductCategory = spy();
       integration.addedProduct = spy();
       integration.removedProduct = spy();
       integration.completedOrder = spy();
+    })
+
+    it('should call #viewedProductCategory when the event is /viewed[ _]?product[ _]?category/i', function(){
+      integration.track(new Track({ event: 'viewed product category' }));
+      integration.track(new Track({ event: 'Viewed Product Category' }));
+      integration.track(new Track({ event: 'viewedProductCategory' }));
+      integration.track(new Track({ event: 'viewed_product_category' }));
+      var args = integration.viewedProductCategory.args;
+      assert(4 == args.length);
+      assert('viewed product category' == args[0][0].event());
+      assert('Viewed Product Category' == args[1][0].event());
+      assert('viewedProductCategory' == args[2][0].event());
+      assert('viewed_product_category' == args[3][0].event());
+      assert(!track.called);
     })
 
     it('should call #viewedProduct when the event is /viewed[ _]?product/i', function(){

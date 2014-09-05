@@ -36,7 +36,8 @@ clean:
 #
 
 build/build.js: node_modules component.json $(wildcard lib/*.js test/*.js)
-	@$(duo) --development test/index.js build/build.js
+	@mkdir -p build
+	@$(duo) --development test/index.js > build/build.js
 
 node_modules: package.json
 	@npm install
