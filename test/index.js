@@ -213,6 +213,7 @@ describe('integration', function(){
     beforeEach(function(){
       Integration.tag('example-img', '<img src="/{{name}}.png">')
       Integration.tag('example-script', '<script src="http://ajax.googleapis.com/ajax/libs/jquery/{{version}}/jquery.min.js"></script>');
+      Integration.tag('optional-params', '<img src="/image.png?a={{ a }}&b={{ b? }}&c={{ c }}">')
       integration = new Integration();
       spy(integration, 'load');
     });
@@ -229,6 +230,22 @@ describe('integration', function(){
       integration.load('example-script', { version: '1.11.1' }, function(){
         var script = integration.load.returns[0];
         assert.equal('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', script.src);
+        done();
+      });
+    });
+
+    it('should exclude optional params if not passed in', function(done){
+      integration.load('optional-params', { a: 1, c: 3 }, function(){
+        var img = integration.load.returns[0];
+        assert.equal(window.location.origin + '/image.png?a=1&c=3', img.src);
+        done();
+      });
+    });
+
+    it('should omit optional params if not passed in', function(done){
+      integration.load('optional-params', { a: 1, b: 2, c: 3 }, function(){
+        var img = integration.load.returns[0];
+        assert.equal(window.location.origin + '/image.png?a=1&b=2&c=3', img.src);
         done();
       });
     });
