@@ -1,4 +1,9 @@
 
+0.3.3 / 2014-09-23
+==================
+
+ * pin component deps
+
 0.3.2 / 2014-09-04
 ==================
 
@@ -34,30 +39,30 @@
  * update readme
  * version component
 
-0.2.2 / 2014-05-16 
+0.2.2 / 2014-05-16
 ==================
 
  * allow camelCase and snake_case names
 
-0.2.1 / 2014-04-29 
+0.2.1 / 2014-04-29
 ==================
 
  * .mapping(): make sure it returns the integration for chaining
  * make: move rm node_modules to distclean target, for speed
  * add .mapping(name)
 
-0.2.0 / 2014-04-26 
+0.2.0 / 2014-04-26
 ==================
 
  * add #events method to find events.
  * component: add githubusercontent to remotes
 
-0.1.9 / 2014-04-16 
+0.1.9 / 2014-04-16
 ==================
 
  * make sure initialize is called with page
 
-0.1.8 / 2014-04-15 
+0.1.8 / 2014-04-15
 ==================
 
  * make sure all methods return the real values
