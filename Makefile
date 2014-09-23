@@ -4,7 +4,7 @@
 #
 
 integration ?= *
-browser ?= ie10
+browser ?= ie8..10
 
 #
 # Binaries.
