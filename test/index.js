@@ -222,6 +222,8 @@ describe('integration', function(){
         var img = integration.load.returns[0];
         var proto = window.location.protocol;
         var host = window.location.hostname;
+        var port = window.location.port;
+        if (port) host += ':' + port;
         assert.equal(proto + '//' + host + '/example.png', img.src);
         done();
       });
