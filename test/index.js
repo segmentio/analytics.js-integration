@@ -220,7 +220,9 @@ describe('integration', function(){
     it('should load img', function (done) {
       integration.load('example-img', { name: 'example' }, function(){
         var img = integration.load.returns[0];
-        assert.equal(window.location.origin + '/example.png', img.src);
+        var proto = window.location.protocol;
+        var host = window.location.hostname;
+        assert.equal(proto + '//' + host + '/example.png', img.src);
         done();
       });
     });
