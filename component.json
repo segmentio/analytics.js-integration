@@ -2,7 +2,7 @@
   "name": "integration",
   "repo": "segmentio/analytics.js-integration",
   "description": "The base integration factory used to create custom analytics integrations for analytics.js.",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "keywords": ["analytics.js", "integration", "analytics"],
   "dependencies": {
     "segmentio/analytics-events": "1.1.0",

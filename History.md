@@ -1,4 +1,15 @@
 
+0.3.4 / 2014-09-26
+==================
+
+ * deps: pin fmt to catch JSON fix for ie7
+ * travis: add sauce creds
+ * package.json: rm .script
+ * travis: browser matrix
+ * tests: append port
+ * tests: ie8..10
+ * tests: support ie*
+
 0.3.3 / 2014-09-23
 ==================
 
