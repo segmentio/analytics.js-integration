@@ -9,10 +9,10 @@ env:
   - secure: UB13Bs1oX1DMA3f7kkxKUVxZl84E2ebn58PWMCO09ZL0Wt4CIKsOPB2lKbIyssG4vIDpJpRkZjE1pWOY7mfmF5W0rHfxCEFML3QciygRBSgopmeHMnIBCXYXCD48iz4f6BhbaKfBXqQPXkLS5lDN/zKkgiULwuyLYqqAJDMbevs=
   - secure: JLZTvjBlWQHQ49T5EDb0ZWq7EG6c+6P5d+sPnPEE9lIlPy/POLEiIi/9gEtkYKHUcrzcSLIIzMeNcwbY6Ju2pWjxlcaD7ri/gRc+tgizSyB+8a9eueu5qM1BAa0PuLsi3mQspuB8NdX6iosGtmlZkJKiF12PY9HFuElz8SqDouI=
   matrix:
-  - BROWSER=safari
-  - BROWSER=firefox
-  - BROWSER=chrome
-  - BROWSER=ie11
-  - BROWSER=ie10
-  - BROWSER=ie9
-  - BROWSER=ie8
+  - browser=safari
+  - browser=firefox
+  - browser=chrome
+  - browser=ie11
+  - browser=ie10
+  - browser=ie9
+  - browser=ie8
