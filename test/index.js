@@ -494,6 +494,7 @@ describe('integration', function(){
     it('should reset window defaults', function(){
       var setTimeout = window.setTimeout;
       var setInterval = window.setInterval;
+      var onerror = window.onerror;
       integration = new Integration();
       var noop = function(){};
       window.setTimeout = noop;
@@ -503,7 +504,7 @@ describe('integration', function(){
       integration.reset();
       assert(setTimeout == window.setTimeout);
       assert(setInterval == window.setInterval);
-      assert(null == window.onerror);
+      assert(onerror == window.onerror);
       assert(null == window.onload);
     });
   });
