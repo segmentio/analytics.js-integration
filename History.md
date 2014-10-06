@@ -1,4 +1,12 @@
 
+0.3.5 / 2014-10-07
+==================
+
+ * remove assert
+ * ocd: remove .load() dupe
+ * reset(): restore onerror
+ * travis typo
+
 0.3.4 / 2014-09-26
 ==================
 
