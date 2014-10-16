@@ -212,7 +212,8 @@ describe('integration', function(){
   describe('#load', function(){
     beforeEach(function(){
       Integration.tag('example-img', '<img src="/{{name}}.png">')
-      Integration.tag('example-script', '<script src="http://ajax.googleapis.com/ajax/libs/jquery/{{version}}/jquery.min.js"></script>');
+      Integration.tag('example-script', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/{{version}}/jquery.min.js"></script>');
+      Integration.tag('404', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/0/jquery.min.js"></script>');
       integration = new Integration();
       spy(integration, 'load');
     });
@@ -229,10 +230,22 @@ describe('integration', function(){
       });
     });
 
+    it('should not callback on error', function(done){
+      integration.debug = function(){
+        var args = [].slice.call(arguments);
+        var msg = args.shift().replace(/%s/g, function(){ return args.shift(); });
+        assert.equal(msg, 'error loading "Name" error="Error: failed to load the script "https://ajax.googleapis.com/ajax/libs/jquery/0/jquery.min.js""');
+        done();
+      };
+      integration.load('404', function(){
+        done(new Error('shouldnt callback on error'));
+      });
+    });
+
     it('should load script', function (done) {
       integration.load('example-script', { version: '1.11.1' }, function(){
         var script = integration.load.returns[0];
-        assert.equal('http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', script.src);
+        assert.equal('https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', script.src);
         done();
       });
     });
