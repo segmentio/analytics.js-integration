@@ -234,7 +234,7 @@ describe('integration', function(){
       integration.debug = function(){
         var args = [].slice.call(arguments);
         var msg = args.shift().replace(/%s/g, function(){ return args.shift(); });
-        assert.equal(msg, 'error loading "Name" error="Error: failed to load the script "https://ajax.googleapis.com/ajax/libs/jquery/0/jquery.min.js""');
+        assert.equal(msg, 'error loading "Name" error="Error: script error "https://ajax.googleapis.com/ajax/libs/jquery/0/jquery.min.js""');
         done();
       };
       integration.load('404', function(){
