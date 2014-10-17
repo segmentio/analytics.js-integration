@@ -1,4 +1,10 @@
 
+0.3.8 / 2014-10-17
+==================
+
+ * Merge pull request #33 from segmentio/noop
+ * .load(): default fn to noop
+
 0.3.7 / 2014-10-17
 ==================
 
