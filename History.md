@@ -1,4 +1,11 @@
 
+0.3.9 / 2015-01-08
+==================
+
+  * make: test-browser re-build on refresh
+  * deps: pin them all
+  * fix: ignore attributes that are not explicitly included
+
 0.3.8 / 2014-10-17
 ==================
 
