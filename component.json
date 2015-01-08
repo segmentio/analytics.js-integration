@@ -18,13 +18,14 @@
     "segmentio/after": "0.0.1",
     "timoxley/next-tick": "0.0.2",
     "yields/slug": "1.1.0",
-    "yields/fmt": "0.x",
+    "yields/fmt": "0.1.0",
+    "segmentio/load-script": "0.1.3",
     "visionmedia/debug": "0.7.3",
     "segmentio/facade": "*"
   },
   "development": {
     "ianstormtaylor/sinon": "*",
-    "component/assert": "*",
+    "component/assert": "0.5",
     "jkroso/equals": "*",
     "segmentio/spy": "*",
     "segmentio/stub": "*",
