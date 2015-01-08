@@ -23,7 +23,7 @@ test: node_modules build/build.js
 	@$(duo-test) phantomjs
 
 test-browser: build/build.js
-	@$(duo-test) browser
+	@$(duo-test) browser --commands make
 
 test-sauce: node_modules build/build.js
 	@$(duo-test) saucelabs -b $(browser)
