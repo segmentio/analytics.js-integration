@@ -5,6 +5,10 @@
 
   The factory returns a barebones integration that has no logic, so that we can share common pieces of logic—like queueing before an integration is ready, providing a way to default options, etc—in one place.
 
+## Integrating with Segment
+
+Interested in integrating your service with us? Check out our [Partners page](https://segment.com/partners/) for more details.
+
 ## Example
 
 ```js
