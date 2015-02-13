@@ -214,6 +214,7 @@ describe('integration', function(){
       Integration.tag('example-img', '<img src="/{{name}}.png">')
       Integration.tag('example-script', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/{{version}}/jquery.min.js"></script>');
       Integration.tag('404', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/0/jquery.min.js"></script>');
+      Integration.tag('example-iframe', '<iframe src="https://jump.omnitarget.com"></iframe>');
       integration = new Integration();
       spy(integration, 'load');
     });
@@ -249,6 +250,15 @@ describe('integration', function(){
         done();
       });
     });
+
+    it('should load iframe', function (done) {
+      integration.load('example-iframe', function(){
+        var iframe = integration.load.returns[0];
+        assert.equal('https://jump.omnitarget.com/', iframe.src);
+        done();
+      });
+    });
+
   });
 
   describe('#invoke', function(){
