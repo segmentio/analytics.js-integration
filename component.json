@@ -26,6 +26,7 @@
     "component/type": "1.0.0",
     "ianstormtaylor/bind": "0.0.1",
     "ianstormtaylor/to-no-case": "0.1.2",
+    "ndhoule/includes": "1.0.0",
     "ndhoule/foldl": "1.0.3",
     "segmentio/after": "0.0.1",
     "segmentio/analytics-events": "1.2.0",
