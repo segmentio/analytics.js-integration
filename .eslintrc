@@ -4,7 +4,9 @@
   "rules": {
     "global-strict": 0,
     "max-len": 0,
-    "strict": 0
+    "strict": 0,
+    "consistent-return": 1,
+    "no-sequences": 0
   },
 
   "globals": {
