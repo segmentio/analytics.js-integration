@@ -1,0 +1,11 @@
+{
+  "env": {
+    "mocha": true
+  },
+
+  "globals": {
+    "mocha": true,
+    "mochaPhantomJS": true,
+    "saucelabs": true
+  }
+}
