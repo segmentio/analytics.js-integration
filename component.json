@@ -25,7 +25,6 @@
     "component/emitter": "1.1.0",
     "component/type": "1.0.0",
     "ianstormtaylor/bind": "0.0.1",
-    "ianstormtaylor/callback": "0.0.1",
     "ianstormtaylor/to-no-case": "0.1.2",
     "ndhoule/foldl": "1.0.3",
     "segmentio/after": "0.0.1",
@@ -40,12 +39,10 @@
     "yields/slug": "1.1.0"
   },
   "development": {
-    "component/assert": "0.5",
+    "component/assert": "*",
     "ianstormtaylor/sinon": "*",
-    "jkroso/equals": "*",
     "segmentio/analytics.js-integration-tester": "*",
     "segmentio/spy": "*",
-    "segmentio/stub": "*",
-    "timoxley/next-tick": "*"
+    "segmentio/stub": "*"
   }
 }
