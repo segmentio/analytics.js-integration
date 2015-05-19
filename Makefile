@@ -4,6 +4,7 @@
 
 DUO = node_modules/.bin/duo
 DUOT = node_modules/.bin/duo-test
+ESLINT = node_modules/.bin/eslint
 
 #
 # Files.
@@ -48,20 +49,24 @@ distclean:
 
 # Build all integrations, tests, and dependencies together for testing.
 build/build.js: node_modules component.json $(SRCS) $(TESTS) | build
-	$(DUO) --development test/index.js > $@
+	@$(DUO) --development test/index.js > $@
 .DEFAULT_GOAL = build/build.js
 
 #
 # Test tasks.
 #
 
+# Lint JavaScript source.
+lint: node_modules
+	@$(ESLINT) $(wildcard lib/*.js test/index.js)
+
 # Test locally in PhantomJS.
-test: node_modules build/build.js
+test: node_modules lint build/build.js
 	@$(DUOT) phantomjs
 .PHONY: test
 
 # Test locally in the browser.
-test-browser: node_modules build/build.js
+test-browser: node_modules lint build/build.js
 	@$(DUOT) browser --commands "make build/build.js"
 .PHONY: test-browser
 

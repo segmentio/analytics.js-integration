@@ -1,16 +1,22 @@
 
+/**
+ * Module dependencies.
+ */
+
 var createIntegration = require('../lib');
 var assert = require('assert');
-var equal = require('equals');
 var spy = require('spy');
 var stub = require('stub');
-var tick = require('next-tick');
 var Facade = require('facade');
-var Page = Facade.Page;
 var Track = Facade.Track;
 
+/**
+ * Tests.
+ */
+
 describe('integration', function(){
-  var Integration, integration;
+  var Integration;
+  var integration;
 
   beforeEach(function(){
     Integration = createIntegration('Name');
@@ -19,43 +25,43 @@ describe('integration', function(){
 
   describe('factory', function(){
     it('should expose a factory', function(){
-      assert('function' === typeof createIntegration);
+      assert(typeof createIntegration === 'function');
     });
 
     it('should return an integration constructor', function(){
-      assert('function' === typeof createIntegration('Name'));
+      assert(typeof createIntegration('Name') === 'function');
     });
 
     it('should have empty #defaults', function(){
-      assert(equal({}, Integration.prototype.defaults));
+      assert.deepEqual(Integration.prototype.defaults, {});
     });
 
     it('should have empty #globals', function(){
-      assert(equal([], Integration.prototype.globals));
+      assert.deepEqual(Integration.prototype.globals, []);
     });
 
     it('should copy over its #name', function(){
-      assert('Name' === Integration.prototype.name);
+      assert(Integration.prototype.name === 'Name');
     });
 
     it('should copy static methods', function(){
-      assert('function' === typeof Integration.option);
+      assert(typeof Integration.option === 'function');
     });
 
     it('should copy prototype methods', function(){
-      assert('function' === typeof Integration.prototype.initialize);
+      assert(typeof Integration.prototype.initialize === 'function');
     });
   });
 
   describe('Integration', function(){
     it('should create a debug method', function(){
-      assert('function' === typeof integration.debug);
+      assert(typeof integration.debug === 'function');
     });
 
     it('should set #options with defaults', function(){
       Integration.option('one', false);
       integration = new Integration({ two: true });
-      assert(equal(integration.options, { one: false, two: true }));
+      assert.deepEqual(integration.options, { one: false, two: true });
     });
 
     it('should create a _queue', function(){
@@ -69,119 +75,118 @@ describe('integration', function(){
     });
 
     it('should wrap #page', function(){
-      var page = Integration.prototype.page;
       integration = new Integration();
-      assert(page !== integration.page);
+      assert(integration.page !== Integration.prototype.page);
     });
 
     it('should wrap #track', function(){
-      var track = Integration.prototype.track;
       integration = new Integration();
-      assert(track != integration.track);
-    })
+      assert(integration.track !== Integration.prototype.track);
+    });
 
     it('should call #flush when ready', function(){
       var flush = stub(Integration.prototype, 'flush');
       integration = new Integration();
       integration.emit('ready');
-      assert(flush.called);
+      assert(flush.calledOnce);
     });
 
     it('should emit `construct` before wrapping', function(){
-      var load, initialize, instance;
-      Integration.on('construct', function (integration) {
+      var initialize;
+      var instance;
+      Integration.on('construct', function(integration) {
         instance = integration;
         initialize = integration.initialize;
       });
       var integration = new Integration();
-      assert(instance === integration);
-      assert(initialize !== integration.initialize);
+      assert(integration === instance);
+      assert(integration.initialize !== initialize);
     });
   });
 
   describe('.option', function(){
     it('should add to #defaults', function(){
-      assert(equal({}, Integration.prototype.defaults));
+      assert.deepEqual(Integration.prototype.defaults, {});
       Integration = createIntegration('Name').option('key', 'value');
-      assert(equal({ key: 'value' }, Integration.prototype.defaults));
+      assert.deepEqual(Integration.prototype.defaults, { key: 'value' });
     });
   });
 
   describe('.global', function(){
     it('should register a global key', function(){
       Integration.global('key').global('quee');
-      assert('key' === Integration.prototype.globals[0]);
-      assert('quee' === Integration.prototype.globals[1]);
+      assert(Integration.prototype.globals[0] === 'key');
+      assert(Integration.prototype.globals[1] === 'quee');
     });
   });
 
   describe('.assumesPageview', function(){
     it('should set #_assumesPageview', function(){
       Integration.assumesPageview();
-      assert(true === Integration.prototype._assumesPageview);
+      assert(Integration.prototype._assumesPageview === true);
     });
   });
 
   describe('.readyOnLoad', function(){
     it('should set #_readyOnLoad', function(){
       Integration.readyOnLoad();
-      assert(true === Integration.prototype._readyOnLoad);
+      assert(Integration.prototype._readyOnLoad === true);
     });
   });
 
   describe('.readyOnInitialize', function(){
     it('should set #_readyOnInitialize', function(){
       Integration.readyOnInitialize();
-      assert(true === Integration.prototype._readyOnInitialize);
+      assert(Integration.prototype._readyOnInitialize === true);
     });
   });
 
   describe('.mapping', function(){
     it('should create a mapping method', function(){
       Integration.mapping('events');
-      var integration = new Integration;
+      var integration = new Integration();
       integration.options.events = { a: 'b' };
-      assert.deepEqual(['b'], integration.events('a'));
-    })
+      assert.deepEqual(integration.events('a'), ['b']);
+    });
 
     it('should set an option to `[]`', function(){
       Integration.mapping('events');
-      var integration = new Integration;
-      assert.deepEqual([], integration.options.events);
-    })
+      var integration = new Integration();
+      assert.deepEqual(integration.options.events, []);
+    });
 
     it('should return `Integration`', function(){
-      assert(Integration == Integration.mapping('events'));
-    })
-  })
+      assert(Integration.mapping('events') === Integration);
+    });
+  });
 
   describe('#emit', function(){
     it('should be mixed in', function(){
-      assert(Integration.prototype.emit);
+      assert(typeof Integration.prototype.emit === 'function');
     });
   });
 
   describe('#on', function(){
     it('should be mixed in', function(){
-      assert(Integration.prototype.on);
+      assert(typeof Integration.prototype.on === 'function');
     });
   });
 
   describe('#once', function(){
     it('should be mixed in', function(){
-      assert(Integration.prototype.once);
+      assert(typeof Integration.prototype.once === 'function');
     });
   });
 
   describe('#off', function(){
     it('should be mixed in', function(){
-      assert(Integration.prototype.off);
+      assert(typeof Integration.prototype.off === 'function');
     });
   });
 
   describe('#loaded', function(){
     it('should return false by default', function(){
-      assert(!integration.loaded());
+      assert(integration.loaded() === false);
     });
   });
 
@@ -193,9 +198,10 @@ describe('integration', function(){
     });
 
     it('should set _initialized', function(){
-      assert(!integration._initialized);
+      // TODO: We should explicitly set this to `false`
+      assert(integration._initialized === undefined);
       integration.initialize();
-      assert(integration._initialized);
+      assert(integration._initialized === true);
     });
 
     it('should be a noop the first time if the integration assumes a pageview', function(){
@@ -211,7 +217,7 @@ describe('integration', function(){
 
   describe('#load', function(){
     beforeEach(function(){
-      Integration.tag('example-img', '<img src="/{{name}}.png">')
+      Integration.tag('example-img', '<img src="/{{name}}.png">');
       Integration.tag('example-script', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/{{version}}/jquery.min.js"></script>');
       Integration.tag('404', '<script src="https://ajax.googleapis.com/ajax/libs/jquery/0/jquery.min.js"></script>');
       Integration.tag('example-iframe', '<iframe src="https://jump.omnitarget.com"></iframe>');
@@ -219,7 +225,7 @@ describe('integration', function(){
       spy(integration, 'load');
     });
 
-    it('should load img', function (done) {
+    it('should load img', function(done) {
       integration.load('example-img', { name: 'example' }, function(){
         var img = integration.load.returns[0];
         var proto = window.location.protocol;
@@ -243,7 +249,7 @@ describe('integration', function(){
       });
     });
 
-    it('should load script', function (done) {
+    it('should load script', function(done){
       integration.load('example-script', { version: '1.11.1' }, function(){
         var script = integration.load.returns[0];
         assert.equal('https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js', script.src);
@@ -251,14 +257,13 @@ describe('integration', function(){
       });
     });
 
-    it('should load iframe', function (done) {
+    it('should load iframe', function(done){
       integration.load('example-iframe', function(){
         var iframe = integration.load.returns[0];
         assert.equal('https://jump.omnitarget.com/', iframe.src);
         done();
       });
     });
-
   });
 
   describe('#invoke', function(){
@@ -294,11 +299,11 @@ describe('integration', function(){
       Integration.prototype.page = function(){ return 1; };
       var integration = new Integration();
       integration.on('ready', function(){
-        assert(1 == integration.invoke('page', 'name'));
+        assert(integration.invoke('page', 'name') === 1);
         done();
       });
       integration.emit('ready');
-    })
+    });
   });
 
   describe('#queue', function(){
@@ -315,7 +320,7 @@ describe('integration', function(){
 
     it('should push the method and args onto the queue', function(){
       integration.queue('track', ['event']);
-      assert(equal(integration._queue, [{ method: 'track', args: ['event'] }]));
+      assert.deepEqual(integration._queue, [{ method: 'track', args: ['event'] }]);
     });
   });
 
@@ -339,55 +344,55 @@ describe('integration', function(){
 
     it('should return the value', function(){
       Integration.prototype.page = function(){ return 1; };
-      assert(1 == new Integration().page());
-    })
+      assert.equal(new Integration().page(), 1);
+    });
   });
 
   describe('#map', function(){
     describe('when `obj` is an object', function(){
       it('should return an empty array on mismatch', function(){
         var obj = { a: '4be41523', b: 'd49ccea' };
-        assert.deepEqual([], integration.map(obj, 'c'));
-      })
+        assert.deepEqual(integration.map(obj, 'c'), []);
+      });
 
       it('should return an array with the value on match', function(){
         var obj = { a: '48dc32b2', b: '48dc32b2' };
-        assert.deepEqual(['48dc32b2'], integration.map(obj, 'b'));
-      })
+        assert.deepEqual(integration.map(obj, 'b'), ['48dc32b2']);
+      });
 
       it('should use to-no-case to match keys', function(){
         var obj = { 'My Event': '7b4fe803', 'other event': '2107007a' };
-        assert.deepEqual(['7b4fe803'], integration.map(obj, 'my_event'));
-      })
-    })
+        assert.deepEqual(integration.map(obj, 'my_event'), ['7b4fe803']);
+      });
+    });
 
     describe('when .options.events is an array', function(){
       it('should return an empty array if the array isnt a map', function(){
         var obj = ['one', 'two'];
-        assert.deepEqual([], integration.map(obj, 'one'));
-      })
+        assert.deepEqual(integration.map(obj, 'one'), []);
+      });
 
       it('should return an empty array when the array is empty', function(){
         var obj = [];
-        assert.deepEqual([], integration.map(obj, 'wee'));
-      })
+        assert.deepEqual(integration.map(obj, 'wee'), []);
+      });
 
       it('should return an empty array on mismatch', function(){
         var obj = [{ key: 'my event', value: '1121f10f' }];
         assert([], integration.map(obj, 'event'));
-      })
+      });
 
       it('should return all matches in the array', function(){
         var obj = [{ key: 'baz', value: '4cff6219' }, { key: 'baz', value: '4426d54'} ];
         assert(['4cff6219', '4426d54'], integration.map(obj, 'baz'));
-      })
+      });
 
       it('should use to-no-case to match keys', function(){
         var obj = [{ key: 'My Event', value: 'a35bd696' }];
         assert(['a35bd696'], integration.map(obj, 'my_event'));
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('#track', function(){
     var track;
@@ -395,13 +400,13 @@ describe('integration', function(){
     beforeEach(function(){
       Integration.readyOnInitialize();
       track = Integration.prototype.track = spy();
-      integration = new Integration;
+      integration = new Integration();
       integration.viewedProduct = spy();
       integration.viewedProductCategory = spy();
       integration.addedProduct = spy();
       integration.removedProduct = spy();
       integration.completedOrder = spy();
-    })
+    });
 
     it('should call #viewedProductCategory when the event is /viewed[ _]?product[ _]?category/i', function(){
       integration.track(new Track({ event: 'viewed product category' }));
@@ -409,13 +414,13 @@ describe('integration', function(){
       integration.track(new Track({ event: 'viewedProductCategory' }));
       integration.track(new Track({ event: 'viewed_product_category' }));
       var args = integration.viewedProductCategory.args;
-      assert(4 == args.length);
-      assert('viewed product category' == args[0][0].event());
-      assert('Viewed Product Category' == args[1][0].event());
-      assert('viewedProductCategory' == args[2][0].event());
-      assert('viewed_product_category' == args[3][0].event());
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'viewed product category');
+      assert(args[1][0].event() === 'Viewed Product Category');
+      assert(args[2][0].event() === 'viewedProductCategory');
+      assert(args[3][0].event() === 'viewed_product_category');
       assert(!track.called);
-    })
+    });
 
     it('should call #viewedProduct when the event is /viewed[ _]?product/i', function(){
       integration.track(new Track({ event: 'viewed product' }));
@@ -423,13 +428,13 @@ describe('integration', function(){
       integration.track(new Track({ event: 'viewedProduct' }));
       integration.track(new Track({ event: 'viewed_product' }));
       var args = integration.viewedProduct.args;
-      assert(4 == args.length);
-      assert('viewed product' == args[0][0].event());
-      assert('Viewed Product' == args[1][0].event());
-      assert('viewedProduct' == args[2][0].event());
-      assert('viewed_product' == args[3][0].event());
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'viewed product');
+      assert(args[1][0].event() === 'Viewed Product');
+      assert(args[2][0].event() === 'viewedProduct');
+      assert(args[3][0].event() === 'viewed_product');
       assert(!track.called);
-    })
+    });
 
     it('should call #addedProduct when the event is /added[ _]?product/i', function(){
       integration.track(new Track({ event: 'added product' }));
@@ -437,13 +442,13 @@ describe('integration', function(){
       integration.track(new Track({ event: 'addedProduct' }));
       integration.track(new Track({ event: 'added_product' }));
       var args = integration.addedProduct.args;
-      assert(4 == args.length);
-      assert('added product' == args[0][0].event());
-      assert('Added Product' == args[1][0].event());
-      assert('addedProduct' == args[2][0].event());
-      assert('added_product' == args[3][0].event());
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'added product');
+      assert(args[1][0].event() === 'Added Product');
+      assert(args[2][0].event() === 'addedProduct');
+      assert(args[3][0].event() === 'added_product');
       assert(!track.called);
-    })
+    });
 
     it('should call #removedProduct when the event is /removed[ _]?product/i', function(){
       integration.track(new Track({ event: 'removed product' }));
@@ -451,13 +456,13 @@ describe('integration', function(){
       integration.track(new Track({ event: 'removedProduct' }));
       integration.track(new Track({ event: 'removed_product' }));
       var args = integration.removedProduct.args;
-      assert(4 == args.length);
-      assert('removed product' == args[0][0].event());
-      assert('Removed Product' == args[1][0].event());
-      assert('removedProduct' == args[2][0].event());
-      assert('removed_product' == args[3][0].event());
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'removed product');
+      assert(args[1][0].event() === 'Removed Product');
+      assert(args[2][0].event() === 'removedProduct');
+      assert(args[3][0].event() === 'removed_product');
       assert(!track.called);
-    })
+    });
 
     it('should call #completedOrder when the event is /completed[ _]?order/i', function(){
       integration.track(new Track({ event: 'completed order' }));
@@ -465,43 +470,43 @@ describe('integration', function(){
       integration.track(new Track({ event: 'completedOrder' }));
       integration.track(new Track({ event: 'completed_order' }));
       var args = integration.completedOrder.args;
-      assert(4 == args.length);
-      assert('completed order' == args[0][0].event());
-      assert('Completed Order' == args[1][0].event());
-      assert('completedOrder' == args[2][0].event());
-      assert('completed_order' == args[3][0].event());
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'completed order');
+      assert(args[1][0].event() === 'Completed Order');
+      assert(args[2][0].event() === 'completedOrder');
+      assert(args[3][0].event() === 'completed_order');
       assert(!track.called);
-    })
+    });
 
     it('should apply arguments to methods', function(){
       var facade = new Track({ event: 'removed product' });
-      integration.track(facade, 1, 2 , 3);
+      integration.track(facade, 1, 2, 3);
       var args = integration.removedProduct.args[0];
-      assert(facade == args[0]);
-      assert(4 == args.length);
-      assert(3 == args.pop());
+      assert(args[0] === facade);
+      assert(args.length === 4);
+      assert(args.pop() === 3);
       facade = new Track({ event: 'some-event' });
       integration.track(facade, 1, 2, 3);
-      assert(facade == track.args[0][0])
-      assert(4 == track.args[0].length)
-      assert(3 == track.args[0].pop())
-    })
+      assert(track.args[0][0] === facade);
+      assert(track.args[0].length === 4);
+      assert(track.args[0].pop() === 3);
+    });
 
     it('should not error if a method is not implemented and fallback to track', function(){
       integration.completedOrder = null;
       integration.track(new Track({ event: 'completed order' }));
       assert(track.called);
-    })
+    });
 
     it('should return the value', function(){
       Integration.prototype.track = function(){ return 1; };
       Integration.prototype.completedOrder = function(){ return 1; };
       var a = new Track({ event: 'event' });
       var b = new Track({ event: 'completed order' });
-      assert(1 == new Integration().track(a));
-      assert(1 == new Integration().track(b));
-    })
-  })
+      assert(new Integration().track(a) === 1);
+      assert(new Integration().track(b) === 1);
+    });
+  });
 
   describe('#reset', function(){
     it('should remove a global', function(){
@@ -510,26 +515,28 @@ describe('integration', function(){
       window.one = [];
       window.two = {};
       integration.reset();
-      assert(undefined === window.one);
-      assert(undefined === window.two);
+      assert(window.one === undefined);
+      assert(window.two === undefined);
     });
 
     it('should reset window defaults', function(){
+      integration = new Integration();
+
+      var noop = function(){};
       var setTimeout = window.setTimeout;
       var setInterval = window.setInterval;
       var onerror = window.onerror;
-      integration = new Integration();
-      var noop = function(){};
       window.setTimeout = noop;
       window.setInterval = noop;
       window.onerror = noop;
       window.onload = noop;
+
       integration.reset();
-      assert(setTimeout == window.setTimeout);
-      assert(setInterval == window.setInterval);
-      assert(onerror == window.onerror);
-      assert(null == window.onload);
+
+      assert(window.setTimeout === setTimeout);
+      assert(window.setInterval === setInterval);
+      assert(window.onerror === onerror);
+      assert(window.onload === onload);
     });
   });
-
 });
