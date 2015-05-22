@@ -387,6 +387,14 @@ describe('integration', function(){
         assert(['4cff6219', '4426d54'], integration.map(obj, 'baz'));
       });
 
+      it('should return an array with the object on match when handling `mixed` values', function(){
+        var events = [
+          { key: 'testEvent', value: { event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' } },
+          { key: 'testEvent2', value: { event: 'testEvent2', mtAdId: 'mt-ad-id', mtId: 'mt-id' } }
+        ];
+        assert.deepEqual(integration.map(events, 'testEvent'), [{ event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' }]);
+      });
+
       it('should use to-no-case to match keys', function(){
         var obj = [{ key: 'My Event', value: 'a35bd696' }];
         assert(['a35bd696'], integration.map(obj, 'my_event'));
