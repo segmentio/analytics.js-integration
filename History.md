@@ -1,4 +1,10 @@
 
+0.3.11 / 2015-05-22
+===================
+
+  * Add ESLint to test harness
+  * Refactor existing code for sanity, ESLint compliance
+
 0.3.10 / 2015-02-13
 ===================
 
