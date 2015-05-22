@@ -1,4 +1,9 @@
 
+0.3.12 / 2015-05-22
+===================
+
+  * Fix Integration.prototype.map regression and add test
+
 0.3.11 / 2015-05-22
 ===================
 
