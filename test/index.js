@@ -367,9 +367,9 @@ describe('integration', function(){
     });
 
     describe('when .options.events is an array', function(){
-      it('should return an empty array if the array isnt a map', function(){
+      it('should map value when present in array of strings', function(){
         var obj = ['one', 'two'];
-        assert.deepEqual(integration.map(obj, 'one'), []);
+        assert.deepEqual(integration.map(obj, 'one'), ['one']);
       });
 
       it('should return an empty array when the array is empty', function(){
