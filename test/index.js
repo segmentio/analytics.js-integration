@@ -351,17 +351,17 @@ describe('integration', function(){
   describe('#map', function(){
     describe('when the mapped option is type "map"', function(){
       it('should return an empty array on mismatch', function(){
-        var option = { a: '4be41523', b: 'd49ccea' };
+        var option = { a: '4be41523', b: 12345 };
         assert.deepEqual(integration.map(option, 'c'), []);
       });
 
       it('should return an array with the value on match', function(){
-        var option = { a: '48dc32b2', b: '48dc32b2' };
+        var option = { a: 12345, b: '48dc32b2' };
         assert.deepEqual(integration.map(option, 'b'), ['48dc32b2']);
       });
 
       it('should use to-no-case to match keys', function(){
-        var option = { 'My Event': '7b4fe803', 'other event': '2107007a' };
+        var option = { 'My Event': '7b4fe803', 'other event': 12345 };
         assert.deepEqual(integration.map(option, 'my_event'), ['7b4fe803']);
       });
     });
@@ -380,28 +380,8 @@ describe('integration', function(){
 
     describe('when the mapped option is type "mixed"', function(){
       it('should return an empty array on mismatch', function(){
-        var option = [{ key: 'my event', value: '1121f10f' }];
+        var option = [{ key: 'my event', value: 12345 }];
         assert.deepEqual([], integration.map(option, 'event'));
-      });
-
-      it('should return an empty array on malformed options', function(){
-        var option = [{ key: 'my event', notValue: '1121f10f' }];
-        assert.deepEqual([], integration.map(option, 'event'));
-      });
-
-      it('should return an empty array for non-string key', function(){
-        var option = [{ key: null, value: '1121f10f' }];
-        assert.deepEqual([], integration.map(option, 'event'));
-      });
-
-      it('shouldn\'t attempt to coerce non-string keys to strings', function(){
-        var option = [{ key: null, value: '1121f10f' }];
-        assert.deepEqual([], integration.map(option, 'null'));
-      });
-
-      it('should return an empty array when `.value` doesn\'t exist', function(){
-        var option = [{ key: 'baz', notValue: '1121f10f' }];
-        assert.deepEqual([], integration.map(option, 'baz'));
       });
 
       it('should return single matched values', function(){
