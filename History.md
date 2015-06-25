@@ -1,4 +1,9 @@
 
+1.0.0 / 2015-06-24
+==================
+
+  * Release as 1.0.0 (note: this change does not introduce any breaking changes, just for semver purposes)
+
 0.4.0 / 2015-06-24
 ==================
 
