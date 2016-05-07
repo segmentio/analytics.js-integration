@@ -1,3 +1,11 @@
+vNEXT / ????-??-??
+==================
+
+  * Remove Duo support, add Browserify support
+  * Switch from Travis CI to Circle CI
+  * Modernize test harness
+  * Various reorganizations/cleanups
+
 1.1.1 / 2016-05-23
 ==================
 

@@ -1,77 +1,81 @@
-#
-# Binaries.
-#
+##
+# Binaries
+##
 
-DUO = node_modules/.bin/duo
-DUOT = node_modules/.bin/duo-test
-ESLINT = node_modules/.bin/eslint
+ESLINT := node_modules/.bin/eslint
+KARMA := node_modules/.bin/karma
 
-#
-# Files.
-#
+##
+# Files
+##
 
-SRCS_DIR = lib
-SRCS = $(shell find lib -type f -name "*.js")
-TESTS_DIR = test
-TESTS = test/index.js
+LIBS = $(shell find lib -type f -name "*.js")
+TESTS = $(shell find test -type f -name "*.test.js")
+SUPPORT = $(wildcard karma.conf*.js)
+ALL_FILES = $(LIBS) $(TESTS) $(SUPPORT)
 
-#
-# Task arguments.
-#
+##
+# Program options/flags
+##
 
-browser ?= chrome
+# A list of options to pass to Karma
+# Overriding this overwrites all options specified in this file (e.g. BROWSERS)
+KARMA_FLAGS ?=
 
-#
-# Chore tasks.
-#
+# A list of Karma browser launchers to run
+# http://karma-runner.github.io/0.13/config/browsers.html
+BROWSERS ?=
+ifdef BROWSERS
+KARMA_FLAGS += --browsers $(BROWSERS)
+endif
 
-# Install node dependencies.
+ifdef CI
+KARMA_CONF ?= karma.conf.ci.js
+else
+KARMA_CONF ?= karma.conf.js
+endif
+
+# Mocha flags.
+GREP ?= .
+
+##
+# Tasks
+##
+
+# Install node modules.
 node_modules: package.json $(wildcard node_modules/*/package.json)
 	@npm install
+	@touch $@
 
-# Create the build directory.
-build:
-	@mkdir -p build
+# Install dependencies.
+install: node_modules
 
 # Remove temporary files and build artifacts.
 clean:
-	@rm -rf *.log build
+	rm -rf *.log coverage
 .PHONY: clean
 
 # Remove temporary files, build artifacts, and vendor dependencies.
-distclean:
-	@rm -rf components node_modules
+distclean: clean
+	rm -rf node_modules
 .PHONY: distclean
 
-#
-# Build tasks.
-#
+# Lint JavaScript source files.
+lint: install
+	@$(ESLINT) $(ALL_FILES)
+.PHONY: lint
 
-# Build all integrations, tests, and dependencies together for testing.
-build/build.js: node_modules component.json $(SRCS) $(TESTS) | build
-	@$(DUO) --development test/index.js > $@
-.DEFAULT_GOAL = build/build.js
+# Attempt to fix linting errors.
+fmt: install
+	@$(ESLINT) --fix $(ALL_FILES)
+.PHONY: fmt
 
-#
-# Test tasks.
-#
-
-# Lint JavaScript source.
-lint: node_modules
-	@$(ESLINT) $(wildcard lib/*.js test/index.js)
-
-# Test locally in PhantomJS.
-test: node_modules lint build/build.js
-	@$(DUOT) phantomjs
-.PHONY: test
-
-# Test locally in the browser.
-test-browser: node_modules lint build/build.js
-	@$(DUOT) browser --commands "make build/build.js"
+# Run browser unit tests in a browser.
+test-browser: install
+	@$(KARMA) start $(KARMA_FLAGS) $(KARMA_CONF)
 .PHONY: test-browser
 
-# Test in Sauce Labs. Note that you must set the SAUCE_USERNAME and
-# SAUCE_ACCESS_KEY environment variables using your Sauce Labs credentials.
-test-sauce: node_modules build/build.js
-	@$(DUOT) saucelabs -b $(browser)
-.PHONY: test-sauce
+# Default test target.
+test: lint test-browser
+.PHONY: test
+.DEFAULT_GOAL = test
