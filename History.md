@@ -1,3 +1,7 @@
+1.1.0 / 2016-05-07
+==================
+
+  * Update Facade dependency to 2.x, fix it to be a dev dependency
 
 1.0.1 / 2015-06-24
 ==================
