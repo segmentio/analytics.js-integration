@@ -1,3 +1,22 @@
+1.1.0 / 2016-05-07
+==================
+
+  * Update Facade dependency to 2.x, fix it to be a dev dependency
+
+1.0.1 / 2015-06-24
+==================
+
+  * Fix prototype#map regression
+
+1.0.0 / 2015-06-24
+==================
+
+  * Release as 1.0.0 (note: this change does not introduce any breaking changes, just for semver purposes)
+
+0.4.0 / 2015-06-24
+==================
+
+  * Add support for array data type in `#events` call
 
 0.3.12 / 2015-05-22
 ===================

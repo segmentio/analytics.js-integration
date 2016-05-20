@@ -14,7 +14,7 @@
   "devDependencies": {
     "duo": "0.7.x",
     "duo-test": "0.2.x",
-    "eslint": "^0.21.2",
+    "eslint": "0.x",
     "eslint-config-segment": "^1.0.7",
     "mocha-phantomjs": "~3.1.5",
     "phantomjs": "~1.9.2-2"

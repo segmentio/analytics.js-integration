@@ -349,55 +349,62 @@ describe('integration', function(){
   });
 
   describe('#map', function(){
-    describe('when `obj` is an object', function(){
+    describe('when the mapped option is type "map"', function(){
       it('should return an empty array on mismatch', function(){
-        var obj = { a: '4be41523', b: 'd49ccea' };
-        assert.deepEqual(integration.map(obj, 'c'), []);
+        var option = { a: '4be41523', b: 12345 };
+        assert.deepEqual(integration.map(option, 'c'), []);
       });
 
       it('should return an array with the value on match', function(){
-        var obj = { a: '48dc32b2', b: '48dc32b2' };
-        assert.deepEqual(integration.map(obj, 'b'), ['48dc32b2']);
+        var option = { a: 12345, b: '48dc32b2' };
+        assert.deepEqual(integration.map(option, 'b'), ['48dc32b2']);
       });
 
       it('should use to-no-case to match keys', function(){
-        var obj = { 'My Event': '7b4fe803', 'other event': '2107007a' };
-        assert.deepEqual(integration.map(obj, 'my_event'), ['7b4fe803']);
+        var option = { 'My Event': '7b4fe803', 'other event': 12345 };
+        assert.deepEqual(integration.map(option, 'my_event'), ['7b4fe803']);
       });
     });
 
-    describe('when .options.events is an array', function(){
-      it('should return an empty array if the array isnt a map', function(){
-        var obj = ['one', 'two'];
-        assert.deepEqual(integration.map(obj, 'one'), []);
+    describe('when the mapped option is type "array"', function(){
+      it('should map value when present in option array', function(){
+        var option = ['one', 'two'];
+        assert.deepEqual(integration.map(option, 'one'), ['one']);
       });
 
-      it('should return an empty array when the array is empty', function(){
-        var obj = [];
-        assert.deepEqual(integration.map(obj, 'wee'), []);
+      it('should return an empty array when option array is empty', function(){
+        var option = [];
+        assert.deepEqual(integration.map(option, 'wee'), []);
       });
+    });
 
+    describe('when the mapped option is type "mixed"', function(){
       it('should return an empty array on mismatch', function(){
-        var obj = [{ key: 'my event', value: '1121f10f' }];
-        assert([], integration.map(obj, 'event'));
+        var option = [{ key: 'my event', value: 12345 }];
+        assert.deepEqual([], integration.map(option, 'event'));
       });
 
-      it('should return all matches in the array', function(){
-        var obj = [{ key: 'baz', value: '4cff6219' }, { key: 'baz', value: '4426d54'} ];
-        assert(['4cff6219', '4426d54'], integration.map(obj, 'baz'));
+      it('should return single matched values', function(){
+        var option = [{ key: 'bar', value: '4cff6219' }, { key: 'baz', value: '4426d54'} ];
+        assert.deepEqual(['4426d54'], integration.map(option, 'baz'));
       });
 
-      it('should return an array with the object on match when handling `mixed` values', function(){
+      it('should return multiple matched values', function(){
+        var option = [{ key: 'baz', value: '4cff6219' }, { key: 'baz', value: '4426d54'} ];
+        assert.deepEqual(['4cff6219', '4426d54'], integration.map(option, 'baz'));
+      });
+
+      it('should use to-no-case to match keys', function(){
+        var obj = [{ key: 'My Event', value: 'a35bd696' }];
+        assert.deepEqual(['a35bd696'], integration.map(obj, 'my_event'));
+      });
+
+      it('should return matched value of type object', function(){
         var events = [
           { key: 'testEvent', value: { event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' } },
           { key: 'testEvent2', value: { event: 'testEvent2', mtAdId: 'mt-ad-id', mtId: 'mt-id' } }
         ];
         assert.deepEqual(integration.map(events, 'testEvent'), [{ event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' }]);
-      });
-
-      it('should use to-no-case to match keys', function(){
-        var obj = [{ key: 'My Event', value: 'a35bd696' }];
-        assert(['a35bd696'], integration.map(obj, 'my_event'));
       });
     });
   });
