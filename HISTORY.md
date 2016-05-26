@@ -1,4 +1,4 @@
-vNEXT / ????-??-??
+2.0.0 / 2016-05-25
 ==================
 
   * Remove Duo support, add Browserify support
