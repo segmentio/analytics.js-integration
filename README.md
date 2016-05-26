@@ -14,7 +14,7 @@ Interested in integrating your service with us? Check out our [Partners page](ht
 ## Example
 
 ```js
-var integration = require('integration');
+var integration = require('@segment/analytics.js-integration');
 
 var Custom = integration('Custom Analytics')
   .global('_custom')
