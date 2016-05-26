@@ -1,22 +1,69 @@
 {
-  "name": "integration",
-  "private": true,
-  "author": "Segment.io <friends@segment.com>",
-  "license": "MIT",
-  "repository": {
-    "url": "https://github.com/segmentio/analytics.js-integration.git",
-    "type": "git"
-  },
+  "name": "@segment/analytics.js-integration",
+  "version": "2.0.0",
+  "description": "Base factory for analytics.js integrations",
+  "keywords": [
+    "analytics.js",
+    "segment"
+  ],
+  "main": "lib/index.js",
   "scripts": {
     "test": "make test"
   },
-  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/segmentio/analytics.js-integration"
+  },
+  "author": "Segment <friends@segment.com>",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/segmentio/analytics.js-integration/issues"
+  },
+  "homepage": "https://github.com/segmentio/analytics.js-integration#readme",
+  "dependencies": {
+    "@ndhoule/after": "^1.0.0",
+    "@ndhoule/clone": "^1.0.0",
+    "@ndhoule/defaults": "^2.0.1",
+    "@ndhoule/each": "^2.0.1",
+    "@ndhoule/every": "^2.0.1",
+    "@ndhoule/foldl": "^2.0.1",
+    "@ndhoule/includes": "^2.0.1",
+    "@segment/fmt": "^1.0.0",
+    "@segment/load-script": "^1.0.1",
+    "analytics-events": "^1.2.0",
+    "component-bind": "^1.0.0",
+    "component-emitter": "^1.2.0",
+    "debug": "^2.2.0",
+    "domify": "^1.4.0",
+    "is": "^3.1.0",
+    "load-iframe": "^1.0.0",
+    "next-tick": "^0.2.2",
+    "slug-component": "^1.1.0",
+    "to-no-case": "^0.1.3"
+  },
   "devDependencies": {
-    "duo": "0.7.x",
-    "duo-test": "0.2.x",
-    "eslint": "0.x",
-    "eslint-config-segment": "^1.0.7",
-    "mocha-phantomjs": "~3.1.5",
-    "phantomjs": "~1.9.2-2"
+    "@ndhoule/extend": "^2.0.0",
+    "@segment/eslint-config": "^3.1.1",
+    "browserify": "^13.0.0",
+    "browserify-istanbul": "^2.0.0",
+    "eslint": "^2.9.0",
+    "eslint-plugin-mocha": "^2.2.0",
+    "eslint-plugin-require-path-exists": "^1.1.5",
+    "istanbul": "^0.4.3",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.4",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-junit-reporter": "^1.0.0",
+    "karma-mocha": "^1.0.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-sauce-launcher": "^1.0.0",
+    "karma-spec-reporter": "0.0.26",
+    "mocha": "^2.2.5",
+    "phantomjs-prebuilt": "^2.1.7",
+    "proclaim": "^3.4.1",
+    "segmentio-facade": "^3.0.2",
+    "sinon": "1.7.3",
+    "watchify": "^3.7.0"
   }
 }
