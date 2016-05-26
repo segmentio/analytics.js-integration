@@ -1,3 +1,8 @@
+2.0.1 / 2016-05-25
+==================
+
+  * Add missing dependency to package.json dependencies field
+
 2.0.0 / 2016-05-25
 ==================
 
