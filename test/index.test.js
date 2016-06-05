@@ -438,6 +438,7 @@ describe('integration', function() {
       integration.track(new Track({ event: 'viewedProductCategory' }));
       integration.track(new Track({ event: 'viewed_product_category' }));
       var args = integration.viewedProductCategory.args;
+      console.log('woo', integration.viewedProductCategory);
       assert(args.length === 4);
       assert(args[0][0].event() === 'viewed product category');
       assert(args[1][0].event() === 'Viewed Product Category');

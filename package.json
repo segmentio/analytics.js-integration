@@ -31,7 +31,7 @@
     "@ndhoule/includes": "^2.0.1",
     "@segment/fmt": "^1.0.0",
     "@segment/load-script": "^1.0.1",
-    "analytics-events": "^1.2.0",
+    "analytics-events": "^2.0.1",
     "component-bind": "^1.0.0",
     "component-emitter": "^1.2.0",
     "debug": "^2.2.0",
