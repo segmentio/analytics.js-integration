@@ -1,3 +1,8 @@
+3.0.0 / 2016-06-06
+==================
+
+  * Update to new major analytics-events to support spec v2
+
 2.0.1 / 2016-05-25
 ==================
 

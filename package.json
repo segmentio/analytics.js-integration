@@ -1,6 +1,6 @@
 {
   "name": "@segment/analytics.js-integration",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Base factory for analytics.js integrations",
   "keywords": [
     "analytics.js",
