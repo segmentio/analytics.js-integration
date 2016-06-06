@@ -425,19 +425,19 @@ describe('integration', function() {
       Integration.readyOnInitialize();
       track = Integration.prototype.track = spy();
       integration = new Integration();
-      integration.viewedProduct = spy();
-      integration.viewedProductCategory = spy();
-      integration.addedProduct = spy();
-      integration.removedProduct = spy();
-      integration.completedOrder = spy();
+      integration.productViewed = spy();
+      integration.productListViewed = spy();
+      integration.productAdded = spy();
+      integration.productRemoved = spy();
+      integration.orderCompleted = spy();
     });
 
-    it('should call #viewedProductCategory when the event is /viewed[ _]?product[ _]?category/i', function() {
+    it('should call #productListViewed when the event is /viewed[ _]?product[ _]?category/i', function() {
       integration.track(new Track({ event: 'viewed product category' }));
       integration.track(new Track({ event: 'Viewed Product Category' }));
       integration.track(new Track({ event: 'viewedProductCategory' }));
       integration.track(new Track({ event: 'viewed_product_category' }));
-      var args = integration.viewedProductCategory.args;
+      var args = integration.productListViewed.args;
       assert(args.length === 4);
       assert(args[0][0].event() === 'viewed product category');
       assert(args[1][0].event() === 'Viewed Product Category');
@@ -446,12 +446,26 @@ describe('integration', function() {
       assert(!track.called);
     });
 
-    it('should call #viewedProduct when the event is /viewed[ _]?product/i', function() {
+    it('should call #productListViewed when the event is /product[ _]?list[ _]?viewed/i', function() {
+      integration.track(new Track({ event: 'product list viewed' }));
+      integration.track(new Track({ event: 'Product List Viewed' }));
+      integration.track(new Track({ event: 'productListViewed' }));
+      integration.track(new Track({ event: 'product_list_viewed' }));
+      var args = integration.productListViewed.args;
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'product list viewed');
+      assert(args[1][0].event() === 'Product List Viewed');
+      assert(args[2][0].event() === 'productListViewed');
+      assert(args[3][0].event() === 'product_list_viewed');
+      assert(!track.called);
+    });
+
+    it('should call #productViewed when the event is /viewed[ _]?product/i', function() {
       integration.track(new Track({ event: 'viewed product' }));
       integration.track(new Track({ event: 'Viewed Product' }));
       integration.track(new Track({ event: 'viewedProduct' }));
       integration.track(new Track({ event: 'viewed_product' }));
-      var args = integration.viewedProduct.args;
+      var args = integration.productViewed.args;
       assert(args.length === 4);
       assert(args[0][0].event() === 'viewed product');
       assert(args[1][0].event() === 'Viewed Product');
@@ -460,12 +474,26 @@ describe('integration', function() {
       assert(!track.called);
     });
 
-    it('should call #addedProduct when the event is /added[ _]?product/i', function() {
+    it('should call #productViewed when the event is /product[ _]?viewed/i', function() {
+      integration.track(new Track({ event: 'product viewed' }));
+      integration.track(new Track({ event: 'Product Viewed' }));
+      integration.track(new Track({ event: 'productViewed' }));
+      integration.track(new Track({ event: 'product_viewed' }));
+      var args = integration.productViewed.args;
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'product viewed');
+      assert(args[1][0].event() === 'Product Viewed');
+      assert(args[2][0].event() === 'productViewed');
+      assert(args[3][0].event() === 'product_viewed');
+      assert(!track.called);
+    });
+
+    it('should call #productAdded when the event is /added[ _]?product/i', function() {
       integration.track(new Track({ event: 'added product' }));
       integration.track(new Track({ event: 'Added Product' }));
       integration.track(new Track({ event: 'addedProduct' }));
       integration.track(new Track({ event: 'added_product' }));
-      var args = integration.addedProduct.args;
+      var args = integration.productAdded.args;
       assert(args.length === 4);
       assert(args[0][0].event() === 'added product');
       assert(args[1][0].event() === 'Added Product');
@@ -474,12 +502,26 @@ describe('integration', function() {
       assert(!track.called);
     });
 
-    it('should call #removedProduct when the event is /removed[ _]?product/i', function() {
+    it('should call #productAdded when the event is /product[ _]?added/i', function() {
+      integration.track(new Track({ event: 'product added' }));
+      integration.track(new Track({ event: 'Product Added' }));
+      integration.track(new Track({ event: 'productAdded' }));
+      integration.track(new Track({ event: 'product_added' }));
+      var args = integration.productAdded.args;
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'product added');
+      assert(args[1][0].event() === 'Product Added');
+      assert(args[2][0].event() === 'productAdded');
+      assert(args[3][0].event() === 'product_added');
+      assert(!track.called);
+    });
+
+    it('should call #productRemoved when the event is /removed[ _]?product/i', function() {
       integration.track(new Track({ event: 'removed product' }));
       integration.track(new Track({ event: 'Removed Product' }));
       integration.track(new Track({ event: 'removedProduct' }));
       integration.track(new Track({ event: 'removed_product' }));
-      var args = integration.removedProduct.args;
+      var args = integration.productRemoved.args;
       assert(args.length === 4);
       assert(args[0][0].event() === 'removed product');
       assert(args[1][0].event() === 'Removed Product');
@@ -488,12 +530,26 @@ describe('integration', function() {
       assert(!track.called);
     });
 
-    it('should call #completedOrder when the event is /completed[ _]?order/i', function() {
+    it('should call #productRemoved when the event is /product[ _]?removed/i', function() {
+      integration.track(new Track({ event: 'product removed' }));
+      integration.track(new Track({ event: 'Product Removed' }));
+      integration.track(new Track({ event: 'productRemoved' }));
+      integration.track(new Track({ event: 'product_removed' }));
+      var args = integration.productRemoved.args;
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'product removed');
+      assert(args[1][0].event() === 'Product Removed');
+      assert(args[2][0].event() === 'productRemoved');
+      assert(args[3][0].event() === 'product_removed');
+      assert(!track.called);
+    });
+
+    it('should call #orderCompleted when the event is /completed[ _]?order/i', function() {
       integration.track(new Track({ event: 'completed order' }));
       integration.track(new Track({ event: 'Completed Order' }));
       integration.track(new Track({ event: 'completedOrder' }));
       integration.track(new Track({ event: 'completed_order' }));
-      var args = integration.completedOrder.args;
+      var args = integration.orderCompleted.args;
       assert(args.length === 4);
       assert(args[0][0].event() === 'completed order');
       assert(args[1][0].event() === 'Completed Order');
@@ -502,10 +558,24 @@ describe('integration', function() {
       assert(!track.called);
     });
 
+    it('should call #orderCompleted when the event is /order[ _]?completed/i', function() {
+      integration.track(new Track({ event: 'order completed' }));
+      integration.track(new Track({ event: 'Order Completed' }));
+      integration.track(new Track({ event: 'orderCompleted' }));
+      integration.track(new Track({ event: 'order_completed' }));
+      var args = integration.orderCompleted.args;
+      assert(args.length === 4);
+      assert(args[0][0].event() === 'order completed');
+      assert(args[1][0].event() === 'Order Completed');
+      assert(args[2][0].event() === 'orderCompleted');
+      assert(args[3][0].event() === 'order_completed');
+      assert(!track.called);
+    });
+
     it('should apply arguments to methods', function() {
       var facade = new Track({ event: 'removed product' });
       integration.track(facade, 1, 2, 3);
-      var args = integration.removedProduct.args[0];
+      var args = integration.productRemoved.args[0];
       assert(args[0] === facade);
       assert(args.length === 4);
       assert(args.pop() === 3);
@@ -517,18 +587,20 @@ describe('integration', function() {
     });
 
     it('should not error if a method is not implemented and fallback to track', function() {
-      integration.completedOrder = null;
+      integration.orderCompleted = null;
       integration.track(new Track({ event: 'completed order' }));
       assert(track.called);
     });
 
     it('should return the value', function() {
       Integration.prototype.track = function() { return 1; };
-      Integration.prototype.completedOrder = function() { return 1; };
+      Integration.prototype.orderCompleted = function() { return 1; };
       var a = new Track({ event: 'event' });
       var b = new Track({ event: 'completed order' });
+      var c = new Track({ event: 'order completed' });
       assert(new Integration().track(a) === 1);
       assert(new Integration().track(b) === 1);
+      assert(new Integration().track(c) === 1);
     });
   });
 
