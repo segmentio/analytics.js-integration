@@ -619,18 +619,12 @@ describe('integration', function() {
       integration = new Integration();
 
       var noop = function() {};
-      var setTimeout = window.setTimeout;
-      var setInterval = window.setInterval;
       var onerror = window.onerror;
-      window.setTimeout = noop;
-      window.setInterval = noop;
       window.onerror = noop;
       window.onload = noop;
 
       integration.reset();
 
-      assert(window.setTimeout === setTimeout);
-      assert(window.setInterval === setInterval);
       assert(window.onerror === onerror);
       assert(window.onload === onload);
     });
