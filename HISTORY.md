@@ -1,3 +1,8 @@
+2.1.0 / 2016-06-13
+==================
+
+  * Remove window.setTimeout,setInterval restoration to prevent interference with timer mocking
+
 2.0.1 / 2016-05-25
 ==================
 
