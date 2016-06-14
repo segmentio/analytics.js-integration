@@ -1,3 +1,8 @@
+3.1.0 / 2016-06-13
+==================
+
+  * Release [30210c26af1f878c1ae961407fe07181c927fb6d](https://github.com/segmentio/analytics.js-integration/commit/30210c26af1f878c1ae961407fe07181c927fb6d) on mainline branch
+
 3.0.0 / 2016-06-06
 ==================
 
