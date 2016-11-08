@@ -1,3 +1,9 @@
+3.2.0 / 2016-11-07
+==================
+
+  * Fix a bug that prevented `.ready()` callback from being invoked
+  * Updated `.assumePageview` to let integrations initialize while nooping first `.page()` call
+
 3.1.0 / 2016-06-13
 ==================
 
