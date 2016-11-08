@@ -79,11 +79,6 @@ describe('integration', function() {
       assert(initialize !== integration.initialize);
     });
 
-    it('should wrap #page', function() {
-      integration = new Integration();
-      assert(integration.page !== Integration.prototype.page);
-    });
-
     it('should wrap #track', function() {
       integration = new Integration();
       assert(integration.track !== Integration.prototype.track);
@@ -344,9 +339,17 @@ describe('integration', function() {
     it('should not call initialize the first time when a page view is assumed', function() {
       Integration.assumesPageview();
       integration = new Integration();
-      integration.initialize = spy();
+      var initialize = integration.initialize = spy();
       integration.page({ name: 'page name' });
-      assert(!integration.initialize.calledWith({ name: 'page name' }));
+      assert(initialize.neverCalledWith({ name: 'page name' }));
+    });
+
+    it('should noop the first page call if assumepageview is enabled', function() {
+      Integration.assumesPageview();
+      var page = Integration.prototype.page = spy();
+      integration = new Integration();
+      integration.page({ name: 'hello' });
+      assert(page.neverCalledWith({ name: 'hello' }));
     });
 
     it('should return the value', function() {
