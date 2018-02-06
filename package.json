@@ -1,6 +1,6 @@
 {
   "name": "@segment/analytics.js-integration",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Base factory for analytics.js integrations",
   "keywords": [
     "analytics.js",
@@ -40,7 +40,8 @@
     "load-iframe": "^1.0.0",
     "next-tick": "^0.2.2",
     "slug-component": "^1.1.0",
-    "to-no-case": "^0.1.3"
+    "to-no-case": "^0.1.3",
+    "lodash.clonedeep": "4.5.0"
   },
   "devDependencies": {
     "@segment/eslint-config": "^3.1.1",

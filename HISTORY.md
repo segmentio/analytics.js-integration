@@ -1,3 +1,9 @@
+
+3.2.1 / 2018-02-06
+==================
+
+  * Replace ndhoule clone with lodash deepclone to handle circular references in objects
+
 3.2.0 / 2016-11-07
 ==================
 
