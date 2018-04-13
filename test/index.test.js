@@ -292,10 +292,12 @@ describe('integration', function() {
       assert(integration.track.calledWith('event'));
     });
 
-    it('should catch errors when it calls', function() {
+    it('should throw errors if the integration errors', function() {
       integration.emit('ready');
       integration.initialize();
-      integration.invoke('page', 'name');
+      assert['throws'](function() {
+        integration.invoke('page', 'name');
+      }, Error, 'Should not swallow exceptions');
     });
 
     it('should return the returned value', function(done) {
