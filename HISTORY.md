@@ -1,4 +1,10 @@
 
+3.3.0 / 2018-04-23
+==================
+
+  * Don't swallow integration errors
+  * Fix test that verifies invoke error behaviour.
+
 3.2.3 / 2018-03-27
 ==================
 
