@@ -300,6 +300,7 @@ describe('integration', function() {
     });
 
     it('should catch errors when it calls', function() {
+      integration.emit('ready');
       integration.initialize();
       integration.invoke('page', 'name');
     });
