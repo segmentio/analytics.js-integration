@@ -633,4 +633,28 @@ describe('integration', function() {
       assert(window.onload === onload);
     });
   });
+
+  describe('#ready', function() {
+    beforeEach(function() {
+      integration = new Integration();
+    });
+
+    it('should should emit a ready event', function() {
+      var called = false;
+      integration.on('ready', function() {
+        called = true;
+      });
+      integration.ready();
+      assert(called === true);
+    });
+
+    it('should should not emit a ready event if the integration fails', function() {
+      var called = false;
+      integration.on('ready', function() {
+        called = true;
+      });
+      integration.ready(new Error('failed to load'));
+      assert(called === false);
+    });
+  });
 });
