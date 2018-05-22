@@ -1,3 +1,11 @@
+
+2.1.1 / 2018-05-22
+==================
+
+  * Don't swallow integration errors
+  * Fix test that verifies invoke error behaviour. Remove unsupported IE versions.
+  * Remove window.setTimeout,setInterval restoration (#53)
+
 2.1.0 / 2016-06-13
 ==================
 
