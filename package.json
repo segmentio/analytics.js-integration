@@ -8,7 +8,18 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "lint": "eslint \"./{lib,test}/**/*.js\"",
+    "format": "prettier-eslint --write --list-different \"./{lib,test}/**/*.{js,json,md}\"",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "linters": {
+      "*.{js,json,md}": [
+        "prettier-eslint --write",
+        "git add"
+      ]
+    }
   },
   "repository": {
     "type": "git",
@@ -36,6 +47,7 @@
     "component-emitter": "^1.2.0",
     "debug": "^2.2.0",
     "domify": "^1.4.0",
+    "eslint-plugin-react": "^7.9.1",
     "extend": "3.0.1",
     "is": "^3.1.0",
     "load-iframe": "^1.0.0",
@@ -47,9 +59,11 @@
     "@segment/eslint-config": "^3.1.1",
     "browserify": "^13.0.0",
     "browserify-istanbul": "^2.0.0",
-    "eslint": "^2.9.0",
-    "eslint-plugin-mocha": "^2.2.0",
-    "eslint-plugin-require-path-exists": "^1.1.5",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-mocha": "^5.0.0",
+    "eslint-plugin-require-path-exists": "^1.1.8",
+    "husky": "^0.14.3",
     "istanbul": "^0.4.3",
     "karma": "^1.1.0",
     "karma-browserify": "^5.0.4",
@@ -60,8 +74,10 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sauce-launcher": "^1.0.0",
     "karma-spec-reporter": "0.0.26",
+    "lint-staged": "^7.2.0",
     "mocha": "^2.2.5",
     "phantomjs-prebuilt": "^2.1.7",
+    "prettier-eslint-cli": "^4.7.1",
     "proclaim": "^3.4.1",
     "segmentio-facade": "^3.0.2",
     "sinon": "1.7.3",
