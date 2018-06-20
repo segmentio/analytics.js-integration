@@ -205,7 +205,7 @@ describe('integration', function() {
     });
 
     it('should still initialize if the integration assumes a pageview', function() {
-      var initialize = Integration.prototype.initialize = spy();
+      var initialize = (Integration.prototype.initialize = spy());
       Integration.assumesPageview();
       var integration = new Integration();
       integration.initialize();
@@ -217,13 +217,30 @@ describe('integration', function() {
     var protocol = document.location.protocol;
     var hostname = document.location.hostname;
     var port = document.location.port;
-    var supportBaseURL = fmt('%s//%s:%s/base/test/support', protocol, hostname, port);
+    var supportBaseURL = fmt(
+      '%s//%s:%s/base/test/support',
+      protocol,
+      hostname,
+      port
+    );
 
     beforeEach(function() {
-      Integration.tag('example-img', '<img src="/base/test/support/{{name}}.png">');
-      Integration.tag('example-script', fmt('<script src="%s/{{name}}.js"></script>', supportBaseURL));
-      Integration.tag('404', fmt('<script src="%s/nonexistent.js"></script>', supportBaseURL));
-      Integration.tag('example-iframe', fmt('<iframe src="%s/iframe.html"></iframe>', supportBaseURL));
+      Integration.tag(
+        'example-img',
+        '<img src="/base/test/support/{{name}}.png">'
+      );
+      Integration.tag(
+        'example-script',
+        fmt('<script src="%s/{{name}}.js"></script>', supportBaseURL)
+      );
+      Integration.tag(
+        '404',
+        fmt('<script src="%s/nonexistent.js"></script>', supportBaseURL)
+      );
+      Integration.tag(
+        'example-iframe',
+        fmt('<iframe src="%s/iframe.html"></iframe>', supportBaseURL)
+      );
       integration = new Integration();
       spy(integration, 'load');
     });
@@ -237,11 +254,15 @@ describe('integration', function() {
     });
 
     it('should load script', function(done) {
-      integration.load('example-script', { name: 'example-script' }, function() {
-        var script = integration.load.returnValues[0];
-        assert.equal(script.src, fmt('%s/example-script.js', supportBaseURL));
-        done();
-      });
+      integration.load(
+        'example-script',
+        { name: 'example-script' },
+        function() {
+          var script = integration.load.returnValues[0];
+          assert.equal(script.src, fmt('%s/example-script.js', supportBaseURL));
+          done();
+        }
+      );
     });
 
     it('should load iframe', function(done) {
@@ -255,10 +276,15 @@ describe('integration', function() {
     es5OnlyIt('should not callback on error', function(done) {
       integration.debug = function() {
         var args = Array.prototype.slice.call(arguments);
-        var msg = args.shift().replace(/%s/g, function() { return args.shift(); });
+        var msg = args.shift().replace(/%s/g, function() {
+          return args.shift();
+        });
         assert.equal(
           msg,
-          fmt('error loading "Name" error="Error: script error "%s/nonexistent.js""', supportBaseURL)
+          fmt(
+            'error loading "Name" error="Error: script error "%s/nonexistent.js""',
+            supportBaseURL
+          )
         );
         done();
       };
@@ -272,7 +298,9 @@ describe('integration', function() {
     beforeEach(function() {
       integration.track = spy();
       integration.queue = spy();
-      integration.page = function() { throw new Error(); };
+      integration.page = function() {
+        throw new Error();
+      };
     });
 
     it('should do nothing if the method does not exist', function() {
@@ -295,13 +323,19 @@ describe('integration', function() {
     it('should throw errors if the integration errors', function() {
       integration.emit('ready');
       integration.initialize();
-      assert['throws'](function() {
-        integration.invoke('page', 'name');
-      }, Error, 'Should not swallow exceptions');
+      assert['throws'](
+        function() {
+          integration.invoke('page', 'name');
+        },
+        Error,
+        'Should not swallow exceptions'
+      );
     });
 
     it('should return the returned value', function(done) {
-      Integration.prototype.page = function() { return 1; };
+      Integration.prototype.page = function() {
+        return 1;
+      };
       var integration = new Integration();
       integration.on('ready', function() {
         assert(integration.invoke('page', 'name') === 1);
@@ -325,13 +359,15 @@ describe('integration', function() {
 
     it('should push the method and args onto the queue', function() {
       integration.queue('track', ['event']);
-      assert.deepEqual(integration._queue, [{ method: 'track', args: ['event'] }]);
+      assert.deepEqual(integration._queue, [
+        { method: 'track', args: ['event'] }
+      ]);
     });
   });
 
   describe('#flush', function() {
     it('should flush the queue', function() {
-      var track = integration.track = spy();
+      var track = (integration.track = spy());
       integration._queue = [{ method: 'track', args: ['event'] }];
       integration.flush();
       assert(track.calledWith('event'));
@@ -342,21 +378,23 @@ describe('integration', function() {
     it('should not call initialize the first time when a page view is assumed', function() {
       Integration.assumesPageview();
       integration = new Integration();
-      var initialize = integration.initialize = spy();
+      var initialize = (integration.initialize = spy());
       integration.page({ name: 'page name' });
       assert(initialize.neverCalledWith({ name: 'page name' }));
     });
 
     it('should noop the first page call if assumepageview is enabled', function() {
       Integration.assumesPageview();
-      var page = Integration.prototype.page = spy();
+      var page = (Integration.prototype.page = spy());
       integration = new Integration();
       integration.page({ name: 'hello' });
       assert(page.neverCalledWith({ name: 'hello' }));
     });
 
     it('should return the value', function() {
-      Integration.prototype.page = function() { return 1; };
+      Integration.prototype.page = function() {
+        return 1;
+      };
       assert.equal(new Integration().page(), 1);
     });
   });
@@ -398,13 +436,22 @@ describe('integration', function() {
       });
 
       it('should return single matched values', function() {
-        var option = [{ key: 'bar', value: '4cff6219' }, { key: 'baz', value: '4426d54' } ];
+        var option = [
+          { key: 'bar', value: '4cff6219' },
+          { key: 'baz', value: '4426d54' }
+        ];
         assert.deepEqual(['4426d54'], integration.map(option, 'baz'));
       });
 
       it('should return multiple matched values', function() {
-        var option = [{ key: 'baz', value: '4cff6219' }, { key: 'baz', value: '4426d54' } ];
-        assert.deepEqual(['4cff6219', '4426d54'], integration.map(option, 'baz'));
+        var option = [
+          { key: 'baz', value: '4cff6219' },
+          { key: 'baz', value: '4426d54' }
+        ];
+        assert.deepEqual(
+          ['4cff6219', '4426d54'],
+          integration.map(option, 'baz')
+        );
       });
 
       it('should use to-no-case to match keys', function() {
@@ -414,10 +461,18 @@ describe('integration', function() {
 
       it('should return matched value of type object', function() {
         var events = [
-          { key: 'testEvent', value: { event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' } },
-          { key: 'testEvent2', value: { event: 'testEvent2', mtAdId: 'mt-ad-id', mtId: 'mt-id' } }
+          {
+            key: 'testEvent',
+            value: { event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' }
+          },
+          {
+            key: 'testEvent2',
+            value: { event: 'testEvent2', mtAdId: 'mt-ad-id', mtId: 'mt-id' }
+          }
         ];
-        assert.deepEqual(integration.map(events, 'testEvent'), [{ event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' }]);
+        assert.deepEqual(integration.map(events, 'testEvent'), [
+          { event: 'testEvent', mtAdId: 'mt-ad-id', mtId: 'mt-id' }
+        ]);
       });
     });
   });
@@ -597,8 +652,12 @@ describe('integration', function() {
     });
 
     it('should return the value', function() {
-      Integration.prototype.track = function() { return 1; };
-      Integration.prototype.orderCompleted = function() { return 1; };
+      Integration.prototype.track = function() {
+        return 1;
+      };
+      Integration.prototype.orderCompleted = function() {
+        return 1;
+      };
       var a = new Track({ event: 'event' });
       var b = new Track({ event: 'completed order' });
       var c = new Track({ event: 'order completed' });
