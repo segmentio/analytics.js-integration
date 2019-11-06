@@ -21,7 +21,6 @@
   },
   "homepage": "https://github.com/segmentio/analytics.js-integration#readme",
   "dependencies": {
-    "@ndhoule/after": "^1.0.0",
     "@ndhoule/clone": "^1.0.0",
     "@ndhoule/defaults": "^2.0.1",
     "@ndhoule/each": "^2.0.1",
@@ -31,6 +30,7 @@
     "@ndhoule/includes": "^2.0.1",
     "@segment/fmt": "^1.0.0",
     "@segment/load-script": "^1.0.1",
+    "after": "^0.8.2",
     "analytics-events": "^2.0.2",
     "component-bind": "^1.0.0",
     "component-emitter": "^1.2.0",
