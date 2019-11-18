@@ -2,16 +2,6 @@
 # yarn lockfile v1
 
 
-"@ndhoule/after@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@ndhoule/after/-/after-1.0.0.tgz#e6d86d121448247ac742ff3a61c63fae83ee1191"
-  dependencies:
-    "@ndhoule/arity" "^2.0.0"
-
-"@ndhoule/arity@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@ndhoule/arity/-/arity-2.0.0.tgz#26bfa0b9755ced9aea819d4e6e7a93db27a5b658"
-
 "@ndhoule/clone@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@ndhoule/clone/-/clone-1.0.0.tgz#0f68394a95008cf360370e101924564a70927afc"
