@@ -1,4 +1,29 @@
 
+patch / 2019-11-20
+==================
+
+  * remove after dependency (#79)
+  * Release 3.3.0
+  * Don't swallow integration errors
+  * Fix test that verifies invoke error behaviour.
+  * Release 3.2.3
+  * Remove old circle.yml file
+  * Move to yarn
+  * Create new config file
+  * Switch from lodash clone to cloning via extend (#57)
+  * Replaced ndhoule clone with lodash deepclone (#56)
+  * Release 3.2.0
+  * update implementation
+  * thanks karma
+  * dont defer init for assumepageview
+  * Release 3.1.0
+  * Release 2.1.0
+  * Remove window.setTimeout,setInterval restoration (#53)
+  * Release 3.0.0
+  * update tests
+  * update analytics-events dep
+  * Update usage directions
+
 3.3.0 / 2018-04-23
 ==================
 
