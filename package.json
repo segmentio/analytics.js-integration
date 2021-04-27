@@ -34,7 +34,7 @@
     "component-bind": "^1.0.0",
     "component-emitter": "^1.2.0",
     "debug": "^2.2.0",
-    "domify": "^1.4.0",
+    "domify": "^1.4.1",
     "extend": "^3.0.2",
     "is": "^3.1.0",
     "load-iframe": "^1.0.0",
