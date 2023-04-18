@@ -2557,10 +2557,10 @@ lexical-scope@^1.2.0:
   dependencies:
     astw "^2.0.0"
 
-load-iframe@1.0.2-alpha.5:
-  version "1.0.2-alpha.5"
-  resolved "https://registry.yarnpkg.com/load-iframe/-/load-iframe-1.0.2-alpha.5.tgz#2f36da63aa93b226fad8a64dc45c22dc30d0c938"
-  integrity sha512-0I3ktS18uiBcIz8EGYfrlpoH/xFqY4/C1ChrSDFVUwVJFVu2NTx2n6gxEldOb5KyKnPmNLVicKQtYVgA/ePqjQ==
+load-iframe@1.0.2-alpha.6:
+  version "1.0.2-alpha.6"
+  resolved "https://registry.yarnpkg.com/load-iframe/-/load-iframe-1.0.2-alpha.6.tgz#47ad6e31a1f2d369670e29c1104ca4089312a0f2"
+  integrity sha512-2jJ6h6wOhZayKN6hnS8p+tjv4kf2ynBw83Pi6Gm2OvtKwsmwTOXomf2Q75BmVy+8XfXPc9pYZ9corItM7CsKwg==
   dependencies:
     is "^3.0.1"
     next-tick "^0.2.2"
