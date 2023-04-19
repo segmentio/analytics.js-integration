@@ -59,7 +59,7 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sauce-launcher": "^1.0.0",
     "karma-spec-reporter": "0.0.26",
-    "mocha": "^2.2.5",
+    "mocha": "^10.2.0",
     "phantomjs-prebuilt": "^2.1.7",
     "proclaim": "^3.4.1",
     "segmentio-facade": "^3.0.2",
