@@ -1,6 +1,6 @@
 {
   "name": "@segment/analytics.js-integration",
-  "version": "3.3.3",
+  "version": "3.3.4-alpha.5",
   "description": "Base factory for analytics.js integrations",
   "keywords": [
     "analytics.js",
@@ -37,7 +37,7 @@
     "domify": "^1.4.1",
     "extend": "^3.0.2",
     "is": "^3.1.0",
-    "load-iframe": "^1.0.0",
+    "load-iframe": "1.0.2-alpha.6",
     "next-tick": "^0.2.2",
     "slug-component": "^1.1.0",
     "to-no-case": "^0.1.3"
