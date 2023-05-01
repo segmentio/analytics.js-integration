@@ -32,7 +32,7 @@
     "@segment/load-script": "^1.0.1",
     "analytics-events": "^2.0.2",
     "component-bind": "^1.0.0",
-    "component-emitter": "^1.2.0",
+    "component-emitter": "^1.3.0",
     "debug": "^2.2.0",
     "domify": "^1.4.1",
     "extend": "^3.0.2",
