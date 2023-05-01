@@ -2557,10 +2557,9 @@ lexical-scope@^1.2.0:
   dependencies:
     astw "^2.0.0"
 
-load-iframe@1.0.2-alpha.6:
-  version "1.0.2-alpha.6"
-  resolved "https://registry.yarnpkg.com/load-iframe/-/load-iframe-1.0.2-alpha.6.tgz#47ad6e31a1f2d369670e29c1104ca4089312a0f2"
-  integrity sha512-2jJ6h6wOhZayKN6hnS8p+tjv4kf2ynBw83Pi6Gm2OvtKwsmwTOXomf2Q75BmVy+8XfXPc9pYZ9corItM7CsKwg==
+load-iframe@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-iframe/-/load-iframe-1.0.0.tgz#b2c111f1a2b982897463232f5286191343bbdbd8"
   dependencies:
     is "^3.0.1"
     next-tick "^0.2.2"
